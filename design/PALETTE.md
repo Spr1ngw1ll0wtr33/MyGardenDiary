@@ -11,8 +11,8 @@ The mockups govern border, fonts, colours and motifs; the functional layout foll
 | Dates, headings, buttons, journal text | Glass Antiqua |
 | Tiny field labels, small print | EB Garamond |
 
-Glass Antiqua is under the SIL Open Font Licence (also on Google Fonts). Boecklin's Universe is
-distributed as freeware; fine for this personal, non-distributed app.
+Both faces are under the SIL Open Font Licence: Glass Antiqua (also on Google Fonts) and
+Boecklin's Universe (Peter Wiegel) — licence texts alongside the font files in this folder.
 
 ## The year-round thread
 
