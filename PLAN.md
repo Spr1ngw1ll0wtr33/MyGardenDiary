@@ -33,21 +33,14 @@ The document-generation library is **docx** (github.com/dolanmiu/docx), stored l
 3. **Month-end gate** — appears automatically on the first opening in a new month *if* the previous month has content. It generates both documents, downloads them on a single tap (Chrome asks once for permission to download two files together), then requires an explicit "I have both files" confirmation before the month clears. It cannot be bypassed; months with no entries produce no documents and no gate, so after a quiet winter gap the app simply carries on.
 4. **Backup & restore** — save a JSON backup file (all current entries and photos) at any time; restore from a chosen backup file. Backup file names carry date and time so the latest is obvious: `My-Garden-Diary-Backup-2026-08-29-1732.json`.
 
-### The backup reminder — explicit, never a hard stop
+### Backup on exit — revised 03/09/2026
 
-The backup is the only defence against Chrome's stored data being cleared, so the reminder is designed to be impossible to miss but never to block:
-
-- **Always visible:** the main screen carries a permanent backup status line — "Last backup: 3 days ago · 12 changes since" — which shifts from quiet to amber to red as the backup ages or unsaved changes build up.
-- **On exit:** leaving through the app's own exit control brings up a full-screen notice, not a small message: it states plainly when the last backup was taken and exactly what stands to be lost — "18 entries and 9 photographs from August are not in any backup file." It offers **Back up now** as the prominent action and **Leave without backing up** as a plain, always-available choice. Exit is never blocked.
-- **Escalation:** the longer since the last backup, and the more unsaved changes, the stronger the notice's wording and colouring — drawing on the same red used for destructive actions in the button hierarchy.
-- **One honest limit:** if the app is killed from Android's recent-apps view (swiped away), Android does not tell it, so no exit notice can appear that way. The entries themselves are safe — autosave means nothing is lost by a swipe — and the permanent status line exists precisely so the state of the backup is in view every time the app is opened, not only on the way out.
-
-### How data is kept safe
-
-- Everything autosaves continuously to the app's own private storage on the phone (IndexedDB, with persistent-storage protection requested from Android). Opening the app shows the month exactly as it was left; a half-finished entry survives an unexpected exit.
-- Photos are shrunk on the way in to diary size (about 1,000 pixels on the long edge, a few hundred KB each) — sized for two to four per page with wrapped text. Originals on the camera roll are untouched.
-- The JSON backup is the belt and braces, moved by hand to the PC and its cloud storage.
-- The month clears **only** after both documents have been generated, both downloads triggered, and Kathryn has confirmed she has them.
+The reminder banner is gone, replaced by a simpler rule Kathryn chose: **Save Backup & Exit**
+is a single dual-action button, coloured in the season's critical colour and fixed at the top
+right of the screen. Every exit through it writes a fresh timestamped backup file as it closes,
+so no reminder is needed. The one path it cannot cover is closing the app by swiping it away in
+Android's recent-apps view: entries are safe in the app's own storage, but no new backup file is
+made until the next proper exit.
 
 ### The two documents
 

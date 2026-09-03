@@ -1,26 +1,27 @@
-// Stage 1 sample documents for My Garden Diary — same library (docx) the app will use.
+// Stage 1 sample documents for My Garden Diary — round 2, to Kathryn's corrections of 03/09/2026:
+// pale cream page, ornate gold frame on every page (header image behind text), squiggle dividers
+// instead of straight rules, thicker motif, narrower Bed No./Yield columns, and the diary's own
+// typefaces specified by name (installed on Kathryn's PC; substitute serif elsewhere).
 const fs = require('fs');
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType,
   ImageRun, PageOrientation, BorderStyle, AlignmentType, ShadingType,
   TextWrappingType, TextWrappingSide, HorizontalPositionRelativeFrom,
-  VerticalPositionRelativeFrom, VerticalAlign, TableLayoutType,
+  VerticalPositionRelativeFrom, VerticalAlign, TableLayoutType, Header,
 } = require('docx');
 
 const GOLD = 'C9A24D';
-const SAND = 'E6D3B6';      // Summer: Pale Sand page ground
-const MUSTARD = 'D2B161';   // Summer secondary — table header, rules
-const CORNFLOWER = '6495ED';// Summer background colour — used as title ink on the pale page
-const INK = '3A2F1B';
-const SERIF = 'Liberation Serif';
+const CREAM = 'FBF6E8';     // page ground — the app's entry-box cream
+const MUSTARD = 'D2B161';   // Summer title colour and table header
+const CORNFLOWER = '6495ED';// Summer identity — day headings
+const INK = '221E14';
+const TITLE_FONT = 'Boecklins Universe';
+const BODY_FONT = 'Glass Antiqua';
 
-const pageBorder = { style: BorderStyle.DOUBLE, size: 18, color: GOLD, space: 18 };
-const borders = {
-  pageBorderTop: pageBorder, pageBorderBottom: pageBorder,
-  pageBorderLeft: pageBorder, pageBorderRight: pageBorder,
-};
-
-const motif = fs.readFileSync('assets/motif-summer.png');
+const motif = fs.readFileSync('assets/motif-summer-bold.png');
+const divider = fs.readFileSync('assets/divider-bold.png');
+const framePortrait = fs.readFileSync('assets/frame-a4-portrait.png');
+const frameLandscape = fs.readFileSync('assets/frame-a4-landscape.png');
 const photos = {
   bed: fs.readFileSync('photos/bed.png'),
   greenhouse: fs.readFileSync('photos/greenhouse.png'),
@@ -28,28 +29,43 @@ const photos = {
   harvest: fs.readFileSync('photos/harvest.png'),
 };
 
-const t = (text, opts = {}) => new TextRun({ text, font: SERIF, color: INK, size: 22, ...opts });
+const t = (text, opts = {}) => new TextRun({ text, font: BODY_FONT, color: INK, size: 24, ...opts });
+
+// Full-page frame, behind the text, repeated on every page via the header.
+const frameHeader = (landscape) => new Header({
+  children: [new Paragraph({
+    children: [new ImageRun({
+      type: 'png', data: landscape ? frameLandscape : framePortrait,
+      transformation: landscape ? { width: 1123, height: 794 } : { width: 794, height: 1123 },
+      floating: {
+        horizontalPosition: { relative: HorizontalPositionRelativeFrom.PAGE, offset: 0 },
+        verticalPosition: { relative: VerticalPositionRelativeFrom.PAGE, offset: 0 },
+        behindDocument: true, allowOverlap: true,
+        wrap: { type: TextWrappingType.NONE },
+      },
+    })],
+  })],
+});
+
+const dividerImg = (w, h) => new ImageRun({ type: 'png', data: divider, transformation: { width: w, height: h } });
 
 function titleBlock() {
   return [
     new Paragraph({
-      alignment: AlignmentType.CENTER, spacing: { before: 120, after: 0 },
-      children: [
-        new ImageRun({ type: 'png', data: motif, transformation: { width: 64, height: 64 } }),
-      ],
-    }),
-    new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { before: 60, after: 0 },
-      children: [t('MY GARDEN DIARY', { size: 20, color: '8A7440', characterSpacing: 60 })],
+      children: [new ImageRun({ type: 'png', data: motif, transformation: { width: 66, height: 66 } })],
     }),
     new Paragraph({
-      alignment: AlignmentType.CENTER, spacing: { before: 40, after: 60 },
-      children: [t('August 2026', { size: 64, color: CORNFLOWER })],
+      alignment: AlignmentType.CENTER, spacing: { before: 40, after: 40 },
+      children: [new TextRun({ text: 'My Garden Diary', font: TITLE_FONT, color: MUSTARD, size: 40 })],
     }),
     new Paragraph({
-      alignment: AlignmentType.CENTER, spacing: { after: 240 },
-      border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: GOLD, space: 4 } },
-      children: [t(' ', { size: 8 })],
+      alignment: AlignmentType.CENTER, spacing: { before: 0, after: 60 },
+      children: [new TextRun({ text: 'August 2026', font: BODY_FONT, color: CORNFLOWER, size: 56 })],
+    }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER, spacing: { after: 220 },
+      children: [dividerImg(380, 22)],
     }),
   ];
 }
@@ -68,20 +84,18 @@ const rows = [
   ['29.08.2026', 'Harvested', 'Blackberry', 'Wild', '', 'Garden', '', '900 g'],
 ];
 const headers = ['Date', 'Action', 'Plant', 'Variety', 'Type', 'Location', 'Bed No.', 'Yield'];
-const widths = [1500, 1650, 2150, 2350, 1650, 1900, 1100, 3100];
+const widths = [1450, 1500, 2100, 2300, 1550, 1800, 800, 1900]; // 13,400 dxa — well inside the frame
 
 const cell = (text, { header = false, w } = {}) => new TableCell({
   width: { size: w, type: WidthType.DXA },
   verticalAlign: VerticalAlign.CENTER,
-  shading: header
-    ? { type: ShadingType.CLEAR, fill: MUSTARD }
-    : { type: ShadingType.CLEAR, fill: 'FBF7EC' },
+  shading: { type: ShadingType.CLEAR, fill: header ? MUSTARD : 'FFFDF5' },
   margins: { top: 80, bottom: 80, left: 110, right: 110 },
-  children: [new Paragraph({ children: [t(text, header ? { bold: true, size: 22 } : { size: 22 })] })],
+  children: [new Paragraph({ children: [t(text, header ? { bold: true } : {})] })],
 });
 
 const table = new Table({
-  layout: TableLayoutType.FIXED,
+  layout: TableLayoutType.FIXED, alignment: AlignmentType.CENTER,
   width: { size: widths.reduce((a, b) => a + b, 0), type: WidthType.DXA },
   borders: {
     top: { style: BorderStyle.SINGLE, size: 6, color: GOLD },
@@ -98,14 +112,14 @@ const table = new Table({
 });
 
 const tableDoc = new Document({
-  background: { color: SAND },
-  styles: { default: { document: { run: { font: SERIF, color: INK, size: 22 } } } },
+  background: { color: CREAM },
+  styles: { default: { document: { run: { font: BODY_FONT, color: INK, size: 24 } } } },
   sections: [{
+    headers: { default: frameHeader(true) },
     properties: {
       page: {
         size: { orientation: PageOrientation.LANDSCAPE },
-        margin: { top: 900, bottom: 900, left: 1000, right: 1000 },
-        borders,
+        margin: { top: 1050, bottom: 900, left: 1250, right: 1250 },
       },
     },
     children: [...titleBlock(), table],
@@ -115,46 +129,43 @@ const tableDoc = new Document({
 /* ---------------- Document 2 — the journal ---------------- */
 const photo = (data, align = 'right') => new ImageRun({
   type: 'png', data,
-  transformation: { width: 176, height: 132 }, // ~4.7 x 3.5 cm — small, text wraps round
+  transformation: { width: 176, height: 132 },
   floating: {
-    horizontalPosition: {
-      relative: HorizontalPositionRelativeFrom.MARGIN,
-      align,
-    },
+    horizontalPosition: { relative: HorizontalPositionRelativeFrom.MARGIN, align },
     verticalPosition: { relative: VerticalPositionRelativeFrom.PARAGRAPH, offset: 0 },
     wrap: { type: TextWrappingType.SQUARE, side: align === 'right' ? TextWrappingSide.LEFT : TextWrappingSide.RIGHT },
-    margins: { left: 120960 / 2, right: 120960 / 2, top: 60480, bottom: 60480 }, // EMU
+    margins: { left: 60480, right: 60480, top: 60480, bottom: 60480 },
   },
 });
 
-const dayHeading = (s) => new Paragraph({
-  spacing: { before: 320, after: 100 },
-  border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: GOLD, space: 2 } },
-  children: [t(s, { size: 30, color: CORNFLOWER })],
-});
+const dayHeading = (s) => [
+  new Paragraph({
+    spacing: { before: 300, after: 20 },
+    children: [new TextRun({ text: s, font: BODY_FONT, size: 32, color: CORNFLOWER })],
+  }),
+  new Paragraph({ spacing: { after: 100 }, children: [dividerImg(220, 13)] }),
+];
 const body = (s, imgs = []) => new Paragraph({
   spacing: { after: 140 }, alignment: AlignmentType.JUSTIFIED,
-  children: [...imgs, t(s, { size: 23 })],
+  children: [...imgs, t(s)],
 });
 
 const journalDoc = new Document({
-  background: { color: SAND },
-  styles: { default: { document: { run: { font: SERIF, color: INK, size: 23 } } } },
+  background: { color: CREAM },
+  styles: { default: { document: { run: { font: BODY_FONT, color: INK, size: 24 } } } },
   sections: [{
+    headers: { default: frameHeader(false) },
     properties: {
-      page: {
-        margin: { top: 1100, bottom: 1100, left: 1250, right: 1250 },
-        borders,
-      },
+      page: { margin: { top: 1250, bottom: 1250, left: 1400, right: 1400 } },
     },
     children: [
       ...titleBlock(),
-      dayHeading('Saturday 1 August 2026'),
+      ...dayHeading('Saturday 1 August 2026'),
       body('A proper harvest morning at last. The courgettes have gone from nothing to glut in a fortnight, as they always do, and the first of the Defenders came in just under two kilos — the best of them from the plant nearest the compost heap, which tells its own story. The beds are drying out fast though, and the water butts are down to the last quarter.', [photo(photos.bed, 'right')]),
       body('Spent the afternoon tidying the greenhouse staging ready for the late sowings. Found a toad living under the far bench, who was not pleased to be discovered and has been left in peace with my apologies.', [photo(photos.greenhouse, 'left')]),
-      dayHeading('Friday 14 August 2026'),
+      ...dayHeading('Friday 14 August 2026'),
       body('Sowed the Arctic King lettuce in the propagator — old seed from two years back, so fingers crossed for germination. The sunflowers by the allotment gate are over eight feet now and the goldfinches have already started on the earliest heads. I had meant to save that seed, but I find I don’t begrudge them it.', [photo(photos.sunflowers, 'right')]),
-      dayHeading('Saturday 29 August 2026'),
+      ...dayHeading('Saturday 29 August 2026'),
       body('Blackberrying along the back hedge with the last of the morning cool — nearly a kilo of them, and the tomatoes and squash coming in besides. The kitchen table looked like a harvest festival by ten o’clock. Made the first crumble of the year and froze the rest. August always ends with purple fingers.', [photo(photos.harvest, 'left')]),
     ],
   }],
