@@ -144,8 +144,9 @@ const dayHeading = (s) => [
     children: [new TextRun({ text: s, font: BODY_FONT, size: 32, color: SEAFOAM })],
   }),
 ];
+const clearMark = () => new Paragraph({ spacing: { before: 0, after: 0 }, children: [t('XCLEARX', { size: 2 })] });
 const dayBreak = () => new Paragraph({
-  alignment: AlignmentType.CENTER, spacing: { before: 200, after: 120 },
+  alignment: AlignmentType.CENTER, spacing: { before: 160, after: 120 },
   children: [dividerImg(380, 22)],
 });
 const body = (s, imgs = []) => new Paragraph({
@@ -166,10 +167,10 @@ const journalDoc = new Document({
       ...dayHeading('Saturday 1 August 2026'),
       body('A proper harvest morning at last. The courgettes have gone from nothing to glut in a fortnight, as they always do, and the first of the Defenders came in just under two kilos — the best of them from the plant nearest the compost heap, which tells its own story. The beds are drying out fast though, and the water butts are down to the last quarter.', [photo(photos.bed, 'right')]),
       body('Spent the afternoon tidying the greenhouse staging ready for the late sowings. Found a toad living under the far bench, who was not pleased to be discovered and has been left in peace with my apologies.', [photo(photos.greenhouse, 'left')]),
-      dayBreak(),
+      clearMark(), dayBreak(),
       ...dayHeading('Friday 14 August 2026'),
       body('Sowed the Arctic King lettuce in the propagator — old seed from two years back, so fingers crossed for germination. The sunflowers by the allotment gate are over eight feet now and the goldfinches have already started on the earliest heads. I had meant to save that seed, but I find I don’t begrudge them it.', [photo(photos.sunflowers, 'right')]),
-      dayBreak(),
+      clearMark(), dayBreak(),
       ...dayHeading('Saturday 29 August 2026'),
       body('Blackberrying along the back hedge with the last of the morning cool — nearly a kilo of them, and the tomatoes and squash coming in besides. The kitchen table looked like a harvest festival by ten o’clock. Made the first crumble of the year and froze the rest. August always ends with purple fingers.', [photo(photos.harvest, 'left')]),
     ],

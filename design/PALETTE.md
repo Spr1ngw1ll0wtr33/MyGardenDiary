@@ -21,8 +21,11 @@ approved build plan. Supersedes rounds 1 and 2.
   so corners never distort. It reads as background, not foreground.
 - **Motifs:** strokes thickened ×1.8, dots ×1.25 (design/motifs/*-bold.svg) to match the
   thinned frame's weight.
-- **Backup & Exit** (renamed round 3): dual-action, critical colour, small one-line button at top
-  right, above the centred title. No backup banner.
+- **Header order** (round 4): centred title first, then the small one-line **Backup & Exit**
+  (dual-action, critical colour) right-aligned beneath it, then a gold divider, then the date
+  row — motif at the left of the page, date left-justified beside it on two lines. No banner.
+- **Button alignment** (round 4): Add Photos and Update sit at the left edge, aligned with the
+  boxes; Save and Delete sit at the right; clear space between.
 - **Journal box:** sized for long-form writing. Photo thumbnails each carry a small ✕ to
   remove; Add Photos appends.
 - **This month:** full-width scrolling list, several entries visible, selected entry
@@ -58,7 +61,9 @@ Seasonal switch: 1 March / 1 June / 1 September / 1 December, from the device da
 Pale Cream #FBF6E8 page; gold frame and squiggle dividers; title "My Garden Diary" in Boecklins
 Universe, Mustard #D2B161, sized above the month date in Glass Antiqua, Seafoam #A1B5A0; day
 headings Seafoam; mustard table header; dividers separate one day from the next (never under a
-heading). The frame is composited ornament-aware at print resolution (design/frame-a4-*.png):
-corners and centre ornaments at true shape, only the plain rails stretched. Table columns total
+heading), each divider preceded by a Word clearing break so it always sits below both the text
+and the photographs. The frame is composited ornament-aware at print resolution
+(design/frame-a4-*.png): corners and centre ornaments at true shape, side rails taken as the
+full span between corner cuts so the junctions are seamless. Table columns total
 13,400 dxa. Fonts are named in the files; they fall back to an ordinary serif on machines
 without them. Generator: design/samples/gen-docs.js (docx 9.7.1, MIT).
