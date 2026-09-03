@@ -49,9 +49,11 @@ approved build plan. Supersedes rounds 1 and 2.
 | Autumn | Olive Green #878961 | Rust Orange, lightened #B57E63 | Rust Orange, lightened #B57E63 | Goldenrod #BFA253 | Terracotta #C3765A | Maroon Red #8D5356 |
 | Winter | Forest Green #5D7865 | Ice Blue #D3DEE8 | Ice Blue #D3DEE8 | Steel Blue #848F9A | Deep Plum, lightened #8E7990 | Berry Red #9A5E66 |
 
-\* Adjusted colours awaiting Kathryn's verdict: Tulip Orange #E0813C (from #D49D6A), Rust Orange
-#B57E63 (from #A2684F) and Deep Plum #8E7990 (from #7A6679), plus white-text legibility on the
-palest buttons.
+\* Adjusted colours APPROVED 04/09/2026: Tulip Orange #E0813C, Rust Orange #B57E63, Deep Plum
+#8E7990. White button text approved as rendered.
+
+**App icon (chosen 04/09/2026):** the gold grape vine (Autumn's motif) on Forest Green #5D7865,
+with the thin gold ring, rounded-square.
 
 Motifs: Spring butterfly · Summer cornflower · Autumn grapes · Winter snowdrop.
 Seasonal switch: 1 March / 1 June / 1 September / 1 December, from the device date.

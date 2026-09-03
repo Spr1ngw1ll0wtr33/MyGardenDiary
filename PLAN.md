@@ -2,7 +2,9 @@
 
 > **Status: APPROVED by Kathryn on 29/08/2026**, including the two amendments made at her request before approval: the document library named and verified in the plan itself (docx, MIT licence, v9.7.1, actively maintained), and the backup reminder made explicit and escalating — always visible, never a hard stop.
 >
-> Next step when work resumes: **Stage 1 — Design** (seasonal palette previews, icon options, and sample documents for the LibreOffice check). Nothing beyond Stage 1 proceeds without her approval of the Stage 1 deliverables.
+> **Stage 1 — Design: APPROVED in full, 04/09/2026.** Four seasonal screens approved (with adjusted Tulip Orange #E0813C, Rust Orange #B57E63, Deep Plum #8E7990); both sample documents approved after Kathryn's LibreOffice check; icon chosen: the gold grape vine (Autumn's motif) on Forest Green #5D7865. Design record: design/PALETTE.md.
+>
+> Now in progress: **Stage 2 — the working core.**
 
 ## Context
 
