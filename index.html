@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Garden Diary</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="seasons.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="frame" id="frame">
+  <main class="app">
+
+    <h1 class="apptitle">My Garden Diary</h1>
+    <div class="exitrow">
+      <button type="button" class="btn crit" id="btnExit">Backup &amp; Exit</button>
+    </div>
+
+    <img class="divider" src="assets/motifs/divider.svg" alt="">
+
+    <div class="dateblock">
+      <img class="motif" id="seasonMotif" src="assets/motifs/autumn.svg" alt="">
+      <div class="today">
+        <span id="todayLine1">Friday 4th</span><br>
+        <span id="todayLine2">September 2026</span>
+      </div>
+    </div>
+
+    <!-- ---------------- What I did ---------------- -->
+    <section aria-labelledby="h-factual">
+      <h2 class="subtitle" id="h-factual">What I did</h2>
+
+      <div class="frow">
+        <div class="fld">
+          <label for="f-date">Date</label>
+          <input class="in" type="date" id="f-date">
+        </div>
+        <div class="fld">
+          <label for="f-action">Action</label>
+          <select class="in" id="f-action">
+            <option value=""></option>
+            <option>Sowed</option>
+            <option>Potted On</option>
+            <option>Planted Out</option>
+            <option>Harvested</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="frow">
+        <div class="fld">
+          <label for="f-plant">Plant</label>
+          <input class="in" type="text" id="f-plant" autocomplete="off">
+        </div>
+        <div class="fld">
+          <label for="f-variety">Variety</label>
+          <input class="in" type="text" id="f-variety" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="frow">
+        <div class="fld">
+          <label for="f-type">Type</label>
+          <select class="in" id="f-type">
+            <option value=""></option>
+            <option>Saved Seed</option>
+            <option>Old Seed</option>
+            <option>New Seed</option>
+            <option>Seedling</option>
+            <option>Plug Plant</option>
+            <option>Plant</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="f-location">Location</label>
+          <select class="in" id="f-location">
+            <option value=""></option>
+            <option>Propagator</option>
+            <option>Greenhouse</option>
+            <option>Pot / Trough</option>
+            <option>Garden</option>
+            <option>Allotment</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="frow">
+        <div class="fld">
+          <label for="f-bed">Bed Number</label>
+          <input class="in" type="text" id="f-bed" autocomplete="off">
+        </div>
+        <div class="fld">
+          <label for="f-yield">Yield</label>
+          <input class="in" type="text" id="f-yield" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="btnrow right">
+        <button type="button" class="btn save big" id="btnSaveFactual">Save</button>
+      </div>
+    </section>
+
+    <img class="divider" src="assets/motifs/divider.svg" alt="">
+
+    <!-- ---------------- Journal ---------------- -->
+    <section aria-labelledby="h-journal">
+      <h2 class="subtitle" id="h-journal">Journal</h2>
+
+      <textarea class="journal-box" id="j-text" rows="8"
+                placeholder="Write as much as you like&hellip;"></textarea>
+
+      <div class="photo-strip" id="photoStrip"></div>
+
+      <input type="file" id="photoInput" accept="image/*" multiple hidden>
+      <div class="btnrow split">
+        <button type="button" class="btn aux big" id="btnAddPhotos">Add Photos</button>
+        <button type="button" class="btn save big" id="btnSaveJournal">Save</button>
+      </div>
+    </section>
+
+    <img class="divider" src="assets/motifs/divider.svg" alt="">
+
+    <!-- ---------------- This month ---------------- -->
+    <section aria-labelledby="h-month">
+      <h2 class="subtitle" id="h-month">This month</h2>
+
+      <div class="monthlist" id="monthList" tabindex="0"></div>
+
+      <div class="btnrow split inset">
+        <button type="button" class="btn aux big" id="btnUpdate" disabled>Update</button>
+        <button type="button" class="btn crit big" id="btnDelete" disabled>Delete</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="ask" id="ask" hidden>
+  <div class="ask-box" role="alertdialog" aria-modal="true" aria-labelledby="askText">
+    <p id="askText">Are you sure?</p>
+    <div class="btnrow split">
+      <button type="button" class="btn aux big" id="askNo">No</button>
+      <button type="button" class="btn crit big" id="askYes">Yes, delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="storage.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

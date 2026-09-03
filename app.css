@@ -1,0 +1,289 @@
+/* My Garden Diary — layout and components.
+   Every measurement here comes from the design approved on 04/09/2026 (design/PALETTE.md). */
+
+@font-face {
+  font-family: 'Boecklins Universe';
+  src: url('assets/fonts/BoecklinsUniverse.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Glass Antiqua';
+  src: url('assets/fonts/GlassAntiqua-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--sub);
+  font-family: 'Glass Antiqua', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ---------- the gold frame ----------
+   Nine-slice: the corner artwork (220 wide x 300 tall in the source) is drawn at true
+   proportions and only the plain rails stretch, so it never distorts on any screen. */
+.frame {
+  min-height: 100vh;
+  background: var(--bg);
+  border-style: solid;
+  border-color: transparent;
+  border-width: 42px 31px;
+  border-image-source: url('assets/frame.png');
+  border-image-slice: 300 220;   /* corner artwork: 300 tall, 220 wide */
+  border-image-width: 42px 31px; /* drawn at the same 220:300 ratio, so nothing distorts */
+  border-image-repeat: stretch;
+}
+
+.app {
+  padding: 4px 30px 42px;   /* the frame's own border supplies the rest of the inset */
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---------- header ---------- */
+.apptitle {
+  font-family: 'Boecklins Universe', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--title);
+  text-align: center;
+  margin: 0;
+}
+
+.exitrow {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 16px 0 0;   /* 16px keeps Backup & Exit clear of the border */
+}
+
+.divider {
+  display: block;
+  width: 94%;
+  height: 12px;
+  margin: 8px auto 10px;
+}
+
+.dateblock {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 2px 0 8px;
+}
+.dateblock .motif { width: 60px; height: 60px; flex: none; }
+.dateblock .today {
+  font-size: 1.62rem;
+  line-height: 1.14;
+  color: var(--title);
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--sub);
+  margin: 2px 0 8px;
+}
+
+/* ---------- fields ---------- */
+.frow { display: flex; gap: 8px; margin-bottom: 8px; }
+.fld  { flex: 1; min-width: 0; }
+
+.fld label {
+  display: block;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--sub);
+  margin-bottom: 2px;
+}
+
+.in {
+  display: block;
+  width: 100%;
+  border: 1px solid rgba(201, 162, 77, .8);
+  border-radius: 9px;
+  background: var(--cream);
+  color: var(--box-ink);
+  padding: 7px 9px;
+  font-family: 'Glass Antiqua', Georgia, serif;
+  font-size: .95rem;
+  line-height: 1.3;
+  min-height: 38px;          /* comfortable to tap */
+  appearance: none;
+  -webkit-appearance: none;
+}
+select.in {
+  background-image:
+    linear-gradient(45deg, transparent 50%, #6B5A2E 50%),
+    linear-gradient(135deg, #6B5A2E 50%, transparent 50%);
+  background-position: right 14px top 50%, right 9px top 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 26px;
+}
+.in:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 1px;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  border: none;
+  border-radius: 9px;
+  padding: 6px 12px;
+  font-family: 'Glass Antiqua', Georgia, serif;
+  font-size: .9rem;
+  letter-spacing: .02em;
+  color: var(--btn-ink);
+  text-align: center;
+  cursor: pointer;
+  min-height: 34px;
+}
+.btn.big { padding: 7px 14px; font-size: .95rem; min-width: 84px; min-height: 40px; }
+
+.btn.save { background: var(--save); }
+.btn.aux  { background: var(--aux); }
+.btn.crit { background: var(--crit); }
+
+.btn.save:active { background: var(--save-p); }
+.btn.aux:active  { background: var(--aux-p); }
+.btn.crit:active { background: var(--crit-p); }
+
+.btn:disabled { opacity: .45; cursor: default; }
+.btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.btnrow { display: flex; gap: 10px; margin: 10px 0 2px; align-items: center; flex-wrap: wrap; }
+.btnrow.right { justify-content: flex-end; }
+.btnrow.split { justify-content: space-between; }
+.btnrow.inset { margin-left: 8px; margin-right: 8px; }
+
+/* ---------- journal ---------- */
+.journal-box {
+  display: block;
+  width: 100%;
+  border: 1px solid rgba(201, 162, 77, .8);
+  border-radius: 9px;
+  background: var(--cream);
+  color: var(--box-ink);
+  padding: 9px 10px;
+  font-family: 'Glass Antiqua', Georgia, serif;
+  font-size: .95rem;
+  line-height: 1.45;
+  min-height: 170px;
+  resize: vertical;
+}
+.journal-box:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+
+.photo-strip { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.photo-strip:empty { margin-top: 0; }
+
+.thumb { position: relative; width: 52px; height: 52px; flex: none; }
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+  border: 1px solid rgba(201, 162, 77, .9);
+}
+.thumb .x {
+  position: absolute;
+  top: -7px; right: -7px;
+  width: 22px; height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--crit);
+  color: #fff;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+/* ---------- this month ---------- */
+.monthlist {
+  margin: 0 8px;
+  border: 1px solid rgba(201, 162, 77, .8);
+  border-radius: 11px;
+  background: var(--cream);
+  color: var(--box-ink);
+  overflow-y: auto;
+  max-height: 232px;          /* about four entries, then it scrolls */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: var(--gold) transparent;
+}
+.monthlist:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.mrow {
+  padding: 8px 12px;
+  font-size: .9rem;
+  line-height: 1.35;
+  border-bottom: 1px solid rgba(201, 162, 77, .45);
+  cursor: pointer;
+}
+.mrow:last-child { border-bottom: none; }
+.mrow .l1 { font-weight: 600; }
+.mrow .l2 { color: #444; font-size: .84rem; }
+.mrow.sel { background: var(--sel); box-shadow: inset 3px 0 0 var(--gold); }
+
+.mempty { padding: 14px 12px; color: #555; font-size: .9rem; }
+
+/* ---------- toast and confirm ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translate(-50%, 14px);
+  background: var(--crit);
+  color: #fff;
+  font-size: .95rem;
+  padding: 9px 18px;
+  border-radius: 9px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  max-width: 86vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.ask {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 26, 18, .55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+}
+.ask[hidden] { display: none; }
+.ask-box {
+  background: var(--cream);
+  color: var(--box-ink);
+  border: 1px solid var(--gold);
+  border-radius: 11px;
+  padding: 16px 18px 14px;
+  max-width: 320px;
+  width: 100%;
+}
+.ask-box p { margin: 0 0 6px; font-size: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { transition: none; }
+}
