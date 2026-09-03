@@ -13,7 +13,7 @@ const {
 const GOLD = 'C9A24D';
 const CREAM = 'FBF6E8';     // page ground — the app's entry-box cream
 const MUSTARD = 'D2B161';   // Summer title colour and table header
-const CORNFLOWER = '6495ED';// Summer identity — day headings
+const SEAFOAM = 'A1B5A0';   // date and day headings — one palette in every season
 const INK = '221E14';
 const TITLE_FONT = 'Boecklins Universe';
 const BODY_FONT = 'Glass Antiqua';
@@ -57,11 +57,11 @@ function titleBlock() {
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { before: 40, after: 40 },
-      children: [new TextRun({ text: 'My Garden Diary', font: TITLE_FONT, color: MUSTARD, size: 40 })],
+      children: [new TextRun({ text: 'My Garden Diary', font: TITLE_FONT, color: MUSTARD, size: 62 })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { before: 0, after: 60 },
-      children: [new TextRun({ text: 'August 2026', font: BODY_FONT, color: CORNFLOWER, size: 56 })],
+      children: [new TextRun({ text: 'August 2026', font: BODY_FONT, color: SEAFOAM, size: 46 })],
     }),
     new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: 220 },
@@ -140,11 +140,14 @@ const photo = (data, align = 'right') => new ImageRun({
 
 const dayHeading = (s) => [
   new Paragraph({
-    spacing: { before: 300, after: 20 },
-    children: [new TextRun({ text: s, font: BODY_FONT, size: 32, color: CORNFLOWER })],
+    spacing: { before: 120, after: 100 },
+    children: [new TextRun({ text: s, font: BODY_FONT, size: 32, color: SEAFOAM })],
   }),
-  new Paragraph({ spacing: { after: 100 }, children: [dividerImg(220, 13)] }),
 ];
+const dayBreak = () => new Paragraph({
+  alignment: AlignmentType.CENTER, spacing: { before: 200, after: 120 },
+  children: [dividerImg(380, 22)],
+});
 const body = (s, imgs = []) => new Paragraph({
   spacing: { after: 140 }, alignment: AlignmentType.JUSTIFIED,
   children: [...imgs, t(s)],
@@ -163,8 +166,10 @@ const journalDoc = new Document({
       ...dayHeading('Saturday 1 August 2026'),
       body('A proper harvest morning at last. The courgettes have gone from nothing to glut in a fortnight, as they always do, and the first of the Defenders came in just under two kilos — the best of them from the plant nearest the compost heap, which tells its own story. The beds are drying out fast though, and the water butts are down to the last quarter.', [photo(photos.bed, 'right')]),
       body('Spent the afternoon tidying the greenhouse staging ready for the late sowings. Found a toad living under the far bench, who was not pleased to be discovered and has been left in peace with my apologies.', [photo(photos.greenhouse, 'left')]),
+      dayBreak(),
       ...dayHeading('Friday 14 August 2026'),
       body('Sowed the Arctic King lettuce in the propagator — old seed from two years back, so fingers crossed for germination. The sunflowers by the allotment gate are over eight feet now and the goldfinches have already started on the earliest heads. I had meant to save that seed, but I find I don’t begrudge them it.', [photo(photos.sunflowers, 'right')]),
+      dayBreak(),
       ...dayHeading('Saturday 29 August 2026'),
       body('Blackberrying along the back hedge with the last of the morning cool — nearly a kilo of them, and the tomatoes and squash coming in besides. The kitchen table looked like a harvest festival by ten o’clock. Made the first crumble of the year and froze the rest. August always ends with purple fingers.', [photo(photos.harvest, 'left')]),
     ],
