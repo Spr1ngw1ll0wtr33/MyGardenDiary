@@ -14,6 +14,7 @@
 
   let entries = [];          // everything the app is currently holding
   let selectedId = null;     // the highlighted entry in This month, if any
+  let editingId = null;      // the entry currently loaded into the form, if any
   let journalPhotoIds = [];  // photographs attached to the journal box right now
   let stashedDraft = null;   // the unsaved work set aside while editing an existing entry
   let thumbUrls = [];        // object URLs to release when the strip is redrawn
@@ -283,9 +284,9 @@
       l2.textContent = line2;
 
       row.append(l1, document.createElement('br'), l2);
-      row.addEventListener('click', () => toggleSelect(e.id));
+      row.addEventListener('click', () => selectRow(e.id));
       row.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggleSelect(e.id); }
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectRow(e.id); }
       });
       list.append(row);
     }
@@ -293,13 +294,21 @@
 
   function setSelection(id) {
     selectedId = id;
-    $('btnUpdate').disabled = id === null;
-    $('btnDelete').disabled = id === null;
+    updateListButtons();
+  }
+
+  /* The two buttons under This month act on the highlighted entry.
+     Edit brings it up into the form; while editing, that button becomes Cancel. */
+  function updateListButtons() {
+    const edit = $('btnEdit');
+    edit.disabled = selectedId === null;
+    edit.textContent = editingId === null ? 'Edit' : 'Cancel';
+    $('btnDelete').disabled = selectedId === null;
   }
 
   /* While an entry is being edited, the Save button beside it says Update and saves the
      changes; the other section's Save is held back so a second entry cannot be made by
-     accident. Nothing here can quietly create a duplicate. */
+     accident. There is only ever one Update button, next to what it will change. */
   function setEditingUI(kind) {
     const fBtn = $('btnSaveFactual'), jBtn = $('btnSaveJournal');
     const editing = { textContent: 'Update', className: 'btn aux big' };
@@ -319,21 +328,27 @@
     requestAnimationFrame(() => window.scrollTo(0, Math.min(y, document.body.scrollHeight)));
   }
 
-  async function toggleSelect(id) {
-    if (selectedId === id) { await deselect(); return; }
-
-    // first selection: set the half-written entry aside so it comes back afterwards
-    if (selectedId === null) {
-      stashedDraft = {
-        factual: readFactual(),
-        journal: { text: $('j-text').value, photoIds: journalPhotoIds.slice() }
-      };
+  /* Tapping a row only highlights it. Nothing is loaded or changed until Edit is pressed. */
+  async function selectRow(id) {
+    if (editingId !== null) {
+      toast('Finish this entry first — Update or Cancel');
+      return;
     }
+    setSelection(selectedId === id ? null : id);
+    renderMonth();
+  }
 
-    const entry = entries.find(e => e.id === id);
+  async function beginEdit() {
+    const entry = entries.find(e => e.id === selectedId);
     if (!entry) return;
-    setSelection(id);
 
+    // set the half-written entry aside so it comes back when editing finishes
+    stashedDraft = {
+      factual: readFactual(),
+      journal: { text: $('j-text').value, photoIds: journalPhotoIds.slice() }
+    };
+
+    editingId = entry.id;
     if (entry.kind === 'journal') {
       clearFactual();
       $('j-text').value = entry.text || '';
@@ -344,12 +359,14 @@
       writeFactual(entry);
     }
     setEditingUI(entry.kind);
+    updateListButtons();
     renderMonth();
     toast('Editing above — press Update to save');
   }
 
-  async function deselect() {
-    setSelection(null);
+  /* Put everything back as it was, keeping the entry untouched. */
+  async function stopEditing({ keepSelected = false } = {}) {
+    editingId = null;
     setEditingUI(null);
     if (stashedDraft) {
       writeFactual(stashedDraft.factual);
@@ -361,6 +378,8 @@
       clearJournal();
     }
     if (!$('f-date').value) $('f-date').value = isoLocal(new Date());
+    if (!keepSelected) setSelection(null);
+    updateListButtons();
     await drawPhotoStrip();
     renderMonth();
   }
@@ -373,7 +392,7 @@
   /* ---------------- saving ---------------- */
 
   const editingKind = () => {
-    const entry = entries.find(e => e.id === selectedId);
+    const entry = entries.find(e => e.id === editingId);
     return entry ? entry.kind : null;
   };
 
@@ -414,7 +433,7 @@
   }
 
   async function updateSelected() {
-    const entry = entries.find(e => e.id === selectedId);
+    const entry = entries.find(e => e.id === editingId);
     if (!entry) return;
 
     if (entry.kind === 'journal') {
@@ -429,7 +448,7 @@
     await holdingScroll(async () => {
       await Store.putEntry(entry);
       await Store.tidyPhotos();
-      await deselect();
+      await stopEditing();
       await refresh();
     });
     toast('Entry updated');
@@ -446,7 +465,7 @@
       await Store.deleteEntry(entry.id);
       await Store.tidyPhotos();
       stashedDraft = null;
-      await deselect();
+      await stopEditing();
       await refresh();
     });
     toast('Entry deleted');
@@ -475,7 +494,7 @@
 
     $('btnSaveFactual').addEventListener('click', saveFactual);
     $('btnSaveJournal').addEventListener('click', saveJournal);
-    $('btnUpdate').addEventListener('click', updateSelected);
+    $('btnEdit').addEventListener('click', () => editingId === null ? beginEdit() : stopEditing({ keepSelected: true }));
     $('btnDelete').addEventListener('click', deleteSelected);
 
     $('btnAddPhotos').addEventListener('click', () => $('photoInput').click());
