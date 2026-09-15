@@ -16,11 +16,9 @@
 > Rebuild with `python3 tools/build-test-page.py`, then republish that same artifact URL.
 > Four seasons page: `PLAYWRIGHT_WORKDIR=<dir with playwright-core> python3 tools/build-season-preview.py`.
 >
-> **Two small questions still open with her:**
-> 1. Does the date box show dd/mm/yyyy on her UK-set phone? It follows the phone's own language
->    setting, and my test browser is American, so I cannot check it here.
-> 2. Should EB Garamond be bundled? The tiny field labels fall back to an ordinary serif offline
->    because that font is not included; everything else uses the two bundled faces.
+> **Both loose ends closed, 15/09/2026:** she confirmed the date box shows UK format on her
+> phone; and EB Garamond is now bundled (Bold, subset to the characters used, 27 KB) so the
+> field labels look right offline. All three typefaces now ship with the app.
 >
 > **Next: Stage 3 — month end.** Generate both documents on the phone from the real entries
 > (design/samples/gen-docs.js is the approved recipe), the gate that blocks the way through until

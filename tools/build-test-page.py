@@ -28,6 +28,8 @@ css = css.replace("url('assets/fonts/BoecklinsUniverse.ttf') format('truetype')"
                   f"url({data_uri('assets/fonts/BoecklinsUniverse.ttf', 'font/ttf')}) format('truetype')")
 css = css.replace("url('assets/fonts/GlassAntiqua-Regular.ttf') format('truetype')",
                   f"url({data_uri('assets/fonts/GlassAntiqua-Regular.ttf', 'font/ttf')}) format('truetype')")
+css = css.replace("url('assets/fonts/EBGaramond-Bold.ttf') format('truetype')",
+                  f"url({data_uri('assets/fonts/EBGaramond-Bold.ttf', 'font/ttf')}) format('truetype')")
 css = css.replace("url('assets/frame.png')", f"url({data_uri('assets/frame.png', 'image/png')})")
 
 # --- page: swap the stylesheet links for the folded styles, embed the images ---

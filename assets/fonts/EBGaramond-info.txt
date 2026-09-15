@@ -1,0 +1,17 @@
+EB Garamond — used only for the small field labels (DATE, PLANT, VARIETY and so on).
+
+Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)
+Licence: SIL Open Font Licence 1.1 — full text in EBGaramond-OFL.txt
+
+Bundled so the labels look right when the app is offline, rather than falling back to
+whatever serif the device happens to have.
+
+The file here is the Bold weight, cut down to the characters the app actually uses
+(basic Latin and common punctuation). That takes it from 383 KB to 27 KB. If new wording
+ever needs characters outside that set, re-cut it from the full font with:
+
+  curl -sS -A "Mozilla/5.0" "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700" 
+  # follow the .ttf link in the stylesheet, then:
+  python3 -m fontTools.subset EBGaramond-Bold.ttf \
+    --unicodes="U+0020-007E,U+00A0,U+00B7,U+2013,U+2014,U+2018,U+2019,U+201C,U+201D,U+2026" \
+    --layout-features="kern,liga" --output-file=EBGaramond-Bold.ttf --no-hinting

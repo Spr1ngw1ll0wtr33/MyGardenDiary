@@ -7,13 +7,13 @@ approved build plan. Supersedes all earlier rounds.
 The exact rendering of everything below is `design/stage1-preview.html` — the approved artefact.
 Where this file and that file ever disagree, the preview is right and this file is the error.
 
-## Typefaces (files in design/fonts/, both SIL Open Font Licence)
+## Typefaces (all three bundled in assets/fonts/, all SIL Open Font Licence)
 
 | Role | Face (installed family name) |
 |---|---|
 | App title | Boecklins Universe |
 | Dates, subtitles, buttons, journal text, documents | Glass Antiqua |
-| Tiny field labels only | EB Garamond |
+| Tiny field labels only | EB Garamond (Bold, subset to 27 KB — bundled 15/09/2026) |
 
 ## Layout
 
