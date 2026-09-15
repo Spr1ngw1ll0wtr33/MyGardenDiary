@@ -4,22 +4,28 @@
 >
 > **Stage 1 — Design: APPROVED in full, 04/09/2026.** Four seasonal screens approved (with adjusted Tulip Orange #E0813C, Rust Orange #B57E63, Deep Plum #8E7990); both sample documents approved after Kathryn's LibreOffice check; icon chosen: the gold grape vine (Autumn's motif) on Forest Green #5D7865. Design record: design/PALETTE.md.
 >
-> **Stage 2 — the working core: BUILT 04/09/2026, awaiting Kathryn's phone test.**
-> The app is `index.html` + `app.css` + `seasons.css` + `storage.js` + `app.js`, built to the
-> approved design. Entries, journal, photographs (shrunk to 1000px), the scrolling This month
-> list with tap-to-select editing, and continuous autosave all work; verified in a real browser
-> at phone size across all four seasons.
-> Test build for her phone: https://claude.ai/code/artifact/0e3c2dde-8309-40a0-90a6-abcd3d768cca
-> (rebuild with `python3 tools/build-test-page.py`, then republish that same artifact URL).
+> **Stage 2 — the working core: COMPLETE, 15/09/2026.** Built, tested by Kathryn on her phone,
+> corrected twice, and approved. The app is `index.html` + `app.css` + `seasons.css` +
+> `storage.js` + `app.js`. Entries, journal, photographs (shrunk to 1000px), the scrolling
+> This month list with Edit / Update / Delete, and continuous autosave all work.
+> Faults she found and fixed: Update duplicated entries instead of overwriting; the page jumped
+> when a row was tapped; two rival Update buttons; the notice covered the buttons. All four
+> seasonal palettes settled and approved (see design/PALETTE.md).
+> Test build: https://claude.ai/artifact/2kxGPE4KA457GjUL8NtoVK
+> All four seasons: https://claude.ai/artifact/JkqPmYqCuorBREJkc1vjAX
+> Rebuild with `python3 tools/build-test-page.py`, then republish that same artifact URL.
+> Four seasons page: `PLAYWRIGHT_WORKDIR=<dir with playwright-core> python3 tools/build-season-preview.py`.
 >
-> Open with her when the session resumes:
-> 1. Her feedback from testing on the phone.
-> 2. Does the date box show dd/mm/yyyy on her UK-set phone?
-> 3. Should EB Garamond be bundled so the tiny field labels match the design exactly offline?
+> **Two small questions still open with her:**
+> 1. Does the date box show dd/mm/yyyy on her UK-set phone? It follows the phone's own language
+>    setting, and my test browser is American, so I cannot check it here.
+> 2. Should EB Garamond be bundled? The tiny field labels fall back to an ordinary serif offline
+>    because that font is not included; everything else uses the two bundled faces.
 >
-> Then: **Stage 3 — month end** (generate both documents on the phone, the gate that blocks the
-> way through until the download is taken, the confirm-then-clear step, and the skipped-months
-> catch-up). Stage 4 is backup and restore, which is also when Backup & Exit gets wired up.
+> **Next: Stage 3 — month end.** Generate both documents on the phone from the real entries
+> (design/samples/gen-docs.js is the approved recipe), the gate that blocks the way through until
+> the download is taken, the confirm-then-clear, and the skipped-months catch-up (no entries, no
+> documents). Stage 4 is backup and restore, which is when Backup & Exit gets wired up.
 > Stage 5 is installation via GitHub Pages.
 
 ## Context
