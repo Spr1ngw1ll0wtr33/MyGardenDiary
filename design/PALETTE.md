@@ -57,7 +57,7 @@ Where this file and that file ever disagree, the preview is right and this file 
 | Season | Background | Title & date | Subtitles & labels | Save | Add Photos / Update | Backup & Exit / Delete |
 |---|---|---|---|---|---|---|
 | Spring | Spring Green, deepened #6B8862 | Tulip Orange, softened #EFB183 | Daffodil Yellow, brightened #F4E6A8 | Sky Blue #A9CFE2 | Soft Lavender #BCB2CE | Rose Pink #D9A1A0 |
-| Summer | Cornflower Blue #6495ED | Mustard Yellow #D2B161 | Pale Sand #E6D3B6 | Seafoam Green #A1B5A0 | Warm Tan #C5A07F | Coral Pink #D79383 |
+| Summer | Heliotrope Lavender #6B5C7D | Pale Cream #FBF6E8 | Pale Sand #E6D3B6 | Seafoam Green #A1B5A0 | Warm Tan #C5A07F | Coral Pink #D79383 |
 | Autumn | Olive Green, deepened #6E7050 | Pale Cream #FBF6E8 | Pale Cream #FBF6E8 | Goldenrod #BFA253 | Terracotta #C3765A | Maroon Red #8D5356 |
 | Winter | Forest Green #5D7865 | Ice Blue #D3DEE8 | Ice Blue #D3DEE8 | Steel Blue #848F9A | Deep Plum, lightened #8E7990 | Berry Red #9A5E66 |
 
@@ -82,7 +82,15 @@ could not read it on the phone. Now Pale Cream #FBF6E8 on an olive deepened one 
 #6B8862. Title 2.12:1, subtitles and labels 3.14:1. Chosen as the balance between the Art
 Nouveau feel and readability; she also approved the apricot itself.
 
-**Summer** she has said is fine for now (1.44:1); unchanged by her decision.
+**Summer, SETTLED 15/09/2026 — heliotrope lavender.** Seeing all four side by side, Kathryn
+found Summer flat. Two causes: the mustard on cornflower measured 1.44:1, and cornflower was 58%
+saturated against 28–29% for the approved Spring and Autumn grounds — the one primary colour
+left, which is what read as flat. Deeper blues were offered first and rightly rejected: blue
+reads cold whatever its depth. A second constraint surfaced in the process — **three of the four
+grounds are green** (sage, olive, forest), so Summer must be neither green nor blue. Chosen:
+heliotrope lavender #6B5C7D, the colour of a summer border, at 26% saturation, with Pale Cream
+lettering at 5.63:1. Summer's seafoam, coral and warm tan continue as the buttons; Mustard Yellow
+is now unused and free if wanted later.
 
 **General lesson recorded:** every ground in the chart is mid-tone, so mid-tone lettering can
 never separate from it. Where readability matters, the ground must move, not the lettering.

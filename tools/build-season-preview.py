@@ -18,7 +18,7 @@ SHOTS = BUILD / 'season-shots'
 
 SEASONS = [
     ('spring', '2027-04-15', 'Spring', '1 March – 31 May',        'deepened sage #6B8862 · apricot #EFB183'),
-    ('summer', '2027-07-10', 'Summer', '1 June – 31 August',      'cornflower #6495ED · mustard #D2B161'),
+    ('summer', '2027-07-10', 'Summer', '1 June – 31 August',      'heliotrope #6B5C7D · pale cream #FBF6E8'),
     ('autumn', '2026-10-20', 'Autumn', '1 September – 30 November','deepened olive #6E7050 · pale cream #FBF6E8'),
     ('winter', '2027-01-20', 'Winter', '1 December – 28 February', 'forest #5D7865 · ice blue #D3DEE8'),
 ]
