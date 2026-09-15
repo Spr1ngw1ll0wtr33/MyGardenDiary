@@ -73,6 +73,14 @@ Pressed (tap-feedback) colours, in the same column order — Save / Aux / Critic
 Adjusted colours APPROVED 04/09/2026: Tulip Orange #E0813C, Rust Orange #B57E63, Deep Plum
 #8E7990. White button text approved as rendered.
 
+**OPEN, 15/09/2026 — Autumn lettering.** On the phone Kathryn could not read the rust title on
+the olive ground. Measured contrast is 1.06:1, i.e. the two colours are almost identical in tone,
+so no rust will work here. Four replacements offered, all from her chart:
+A Pale Cream #FBF6E8 on olive (3.36:1) · B Deep Cream #F3E1C5 (2.83:1) ·
+C Daffodil Yellow #E9D58F (2.49:1) · D Pale Cream on a deepened olive #6E7050 (4.75:1).
+Awaiting her choice. The same measurement shows Spring (1.30:1) and Summer (1.44:1) are also
+low; she has not raised them, so they are unchanged pending her word.
+
 Motifs: Spring butterfly · Summer cornflower · Autumn grapes · Winter snowdrop.
 Seasonal switch: 1 March / 1 June / 1 September / 1 December, from the device date.
 

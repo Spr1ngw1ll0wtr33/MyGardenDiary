@@ -297,6 +297,28 @@
     $('btnDelete').disabled = id === null;
   }
 
+  /* While an entry is being edited, the Save button beside it says Update and saves the
+     changes; the other section's Save is held back so a second entry cannot be made by
+     accident. Nothing here can quietly create a duplicate. */
+  function setEditingUI(kind) {
+    const fBtn = $('btnSaveFactual'), jBtn = $('btnSaveJournal');
+    const editing = { textContent: 'Update', className: 'btn aux big' };
+    const saving  = { textContent: 'Save',   className: 'btn save big' };
+    Object.assign(fBtn, kind === 'factual' ? editing : saving);
+    Object.assign(jBtn, kind === 'journal' ? editing : saving);
+    fBtn.disabled = kind === 'journal';
+    jBtn.disabled = kind === 'factual';
+    $('h-factual').textContent = kind === 'factual' ? 'What I did — editing' : 'What I did';
+    $('h-journal').textContent = kind === 'journal' ? 'Journal — editing'    : 'Journal';
+  }
+
+  /* Keep the page where she left it when the list is redrawn. */
+  async function holdingScroll(fn) {
+    const y = window.scrollY;
+    await fn();
+    requestAnimationFrame(() => window.scrollTo(0, Math.min(y, document.body.scrollHeight)));
+  }
+
   async function toggleSelect(id) {
     if (selectedId === id) { await deselect(); return; }
 
@@ -317,18 +339,20 @@
       $('j-text').value = entry.text || '';
       journalPhotoIds = (entry.photoIds || []).slice();
       await drawPhotoStrip();
-      $('j-text').scrollIntoView({ block: 'center', behavior: 'smooth' });
     } else {
       clearJournal();
       writeFactual(entry);
-      $('f-plant').scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
+    setEditingUI(entry.kind);
     renderMonth();
-    toast('Editing this entry — press Update to save your changes');
+    toast(entry.kind === 'journal'
+      ? 'Editing this journal entry above — press Update to save, or tap it again to leave it'
+      : 'Editing this entry above — press Update to save, or tap it again to leave it');
   }
 
   async function deselect() {
     setSelection(null);
+    setEditingUI(null);
     if (stashedDraft) {
       writeFactual(stashedDraft.factual);
       $('j-text').value = stashedDraft.journal.text || '';
@@ -350,7 +374,13 @@
 
   /* ---------------- saving ---------------- */
 
+  const editingKind = () => {
+    const entry = entries.find(e => e.id === selectedId);
+    return entry ? entry.kind : null;
+  };
+
   async function saveFactual() {
+    if (editingKind() === 'factual') return updateSelected();   // never a duplicate
     const values = readFactual();
     if (factualIsEmpty(values)) {
       toast('Nothing to save yet — fill in a field first');
@@ -366,6 +396,7 @@
   }
 
   async function saveJournal() {
+    if (editingKind() === 'journal') return updateSelected();   // never a duplicate
     const text = $('j-text').value.trim();
     if (!text && !journalPhotoIds.length) {
       toast('Nothing to save yet — write something or add a photograph');
@@ -397,10 +428,12 @@
     }
     entry.updated = Date.now();
 
-    await Store.putEntry(entry);
-    await Store.tidyPhotos();
-    await deselect();
-    await refresh();
+    await holdingScroll(async () => {
+      await Store.putEntry(entry);
+      await Store.tidyPhotos();
+      await deselect();
+      await refresh();
+    });
     toast('Entry updated');
   }
 
@@ -411,11 +444,13 @@
     const yes = await confirmAsk(`Delete this entry?\n\n${line1}`);
     if (!yes) return;
 
-    await Store.deleteEntry(entry.id);
-    await Store.tidyPhotos();
-    stashedDraft = null;
-    await deselect();
-    await refresh();
+    await holdingScroll(async () => {
+      await Store.deleteEntry(entry.id);
+      await Store.tidyPhotos();
+      stashedDraft = null;
+      await deselect();
+      await refresh();
+    });
     toast('Entry deleted');
   }
 
