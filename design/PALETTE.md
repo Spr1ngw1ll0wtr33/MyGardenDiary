@@ -56,9 +56,9 @@ Where this file and that file ever disagree, the preview is right and this file 
 
 | Season | Background | Title & date | Subtitles & labels | Save | Add Photos / Update | Backup & Exit / Delete |
 |---|---|---|---|---|---|---|
-| Spring | Spring Green #9AB791 | Tulip Orange, adjusted #E0813C | Daffodil Yellow #E9D58F | Sky Blue #A9CFE2 | Soft Lavender #BCB2CE | Rose Pink #D9A1A0 |
+| Spring | Spring Green #9AB791 | Tulip Orange, softened #EFB183 | Daffodil Yellow, brightened #F4E6A8 | Sky Blue #A9CFE2 | Soft Lavender #BCB2CE | Rose Pink #D9A1A0 |
 | Summer | Cornflower Blue #6495ED | Mustard Yellow #D2B161 | Pale Sand #E6D3B6 | Seafoam Green #A1B5A0 | Warm Tan #C5A07F | Coral Pink #D79383 |
-| Autumn | Olive Green #878961 | Rust Orange, lightened #B57E63 | Rust Orange, lightened #B57E63 | Goldenrod #BFA253 | Terracotta #C3765A | Maroon Red #8D5356 |
+| Autumn | Olive Green, deepened #6E7050 | Pale Cream #FBF6E8 | Pale Cream #FBF6E8 | Goldenrod #BFA253 | Terracotta #C3765A | Maroon Red #8D5356 |
 | Winter | Forest Green #5D7865 | Ice Blue #D3DEE8 | Ice Blue #D3DEE8 | Steel Blue #848F9A | Deep Plum, lightened #8E7990 | Berry Red #9A5E66 |
 
 Pressed (tap-feedback) colours, in the same column order — Save / Aux / Critical:
@@ -73,13 +73,22 @@ Pressed (tap-feedback) colours, in the same column order — Save / Aux / Critic
 Adjusted colours APPROVED 04/09/2026: Tulip Orange #E0813C, Rust Orange #B57E63, Deep Plum
 #8E7990. White button text approved as rendered.
 
-**OPEN, 15/09/2026 — Autumn lettering.** On the phone Kathryn could not read the rust title on
-the olive ground. Measured contrast is 1.06:1, i.e. the two colours are almost identical in tone,
-so no rust will work here. Four replacements offered, all from her chart:
-A Pale Cream #FBF6E8 on olive (3.36:1) · B Deep Cream #F3E1C5 (2.83:1) ·
-C Daffodil Yellow #E9D58F (2.49:1) · D Pale Cream on a deepened olive #6E7050 (4.75:1).
-Awaiting her choice. The same measurement shows Spring (1.30:1) and Summer (1.44:1) are also
-low; she has not raised them, so they are unchanged pending her word.
+**Autumn, SETTLED 15/09/2026 — option D.** The rust title on olive measured 1.06:1 and Kathryn
+could not read it on the phone. Now Pale Cream #FBF6E8 on an olive deepened one step to #6E7050
+— **4.75:1**, comfortable at any size.
+
+**Spring, part-settled 15/09/2026.** At her request the tulip orange is softened to a muted
+apricot #EFB183 (saturation 73% → 45%) and the daffodil brightened to #F4E6A8 for subtitles and
+labels — far less garish, and truer to Art Nouveau. But softening alone does not make it
+readable: on the light sage the title measures 1.18:1. **The depth of the ground is the only
+lever.** Options put to her, all keeping the softened colours: A current sage #9AB791 (1.18:1) ·
+B #7E9C74 (1.64) · C #6B8862 (2.12) · D #5C7854 (2.64); subtitles run about a third higher again.
+Awaiting her choice — the ground is unchanged until she picks.
+
+**Summer** she has said is fine for now (1.44:1); unchanged by her decision.
+
+**General lesson recorded:** every ground in the chart is mid-tone, so mid-tone lettering can
+never separate from it. Where readability matters, the ground must move, not the lettering.
 
 Motifs: Spring butterfly · Summer cornflower · Autumn grapes · Winter snowdrop.
 Seasonal switch: 1 March / 1 June / 1 September / 1 December, from the device date.

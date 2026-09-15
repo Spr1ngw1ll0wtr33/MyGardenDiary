@@ -13,8 +13,8 @@
 
 .season-spring {
   --bg:    #9AB791;   /* Spring Green */
-  --title: #E0813C;   /* Tulip Orange, adjusted */
-  --sub:   #E9D58F;   /* Daffodil Yellow */
+  --title: #EFB183;   /* Tulip Orange, softened  (was #E0813C) */
+  --sub:   #F4E6A8;   /* Daffodil Yellow, brightened (was #E9D58F) */
   --save:  #A9CFE2;  --save-p: #87B2CB;   /* Sky Blue */
   --aux:   #BCB2CE;  --aux-p:  #9E92B6;   /* Soft Lavender */
   --crit:  #D9A1A0;  --crit-p: #C08183;   /* Rose Pink */
@@ -30,9 +30,9 @@
 }
 
 .season-autumn {
-  --bg:    #878961;   /* Olive Green */
-  --title: #B57E63;   /* Rust Orange, lightened */
-  --sub:   #B57E63;   /* Rust Orange, lightened */
+  --bg:    #6E7050;   /* Olive Green, deepened one step (option D, 15/09/2026) */
+  --title: #FBF6E8;   /* Pale Cream — 4.75:1, comfortable at any size */
+  --sub:   #FBF6E8;   /* Pale Cream */
   --save:  #BFA253;  --save-p: #A0873C;   /* Goldenrod */
   --aux:   #C3765A;  --aux-p:  #A65E44;   /* Terracotta */
   --crit:  #8D5356;  --crit-p: #713F44;   /* Maroon Red */

@@ -73,7 +73,7 @@
     el.textContent = message;
     el.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
   }
 
   function confirmAsk(question, yesLabel = 'Yes, delete') {
@@ -345,9 +345,7 @@
     }
     setEditingUI(entry.kind);
     renderMonth();
-    toast(entry.kind === 'journal'
-      ? 'Editing this journal entry above — press Update to save, or tap it again to leave it'
-      : 'Editing this entry above — press Update to save, or tap it again to leave it');
+    toast('Editing above — press Update to save');
   }
 
   async function deselect() {
@@ -383,7 +381,7 @@
     if (editingKind() === 'factual') return updateSelected();   // never a duplicate
     const values = readFactual();
     if (factualIsEmpty(values)) {
-      toast('Nothing to save yet — fill in a field first');
+      toast('Nothing to save yet');
       return;
     }
     const entry = Object.assign({ kind: 'factual', created: Date.now() }, values);
@@ -399,7 +397,7 @@
     if (editingKind() === 'journal') return updateSelected();   // never a duplicate
     const text = $('j-text').value.trim();
     if (!text && !journalPhotoIds.length) {
-      toast('Nothing to save yet — write something or add a photograph');
+      toast('Nothing to save yet');
       return;
     }
     await Store.putEntry({
@@ -463,7 +461,7 @@
     $('f-date').value = isoLocal(today);
 
     if (!(await Store.available())) {
-      toast('This browser will not let the diary store anything');
+      toast('This browser will not let the diary save anything');
       return;
     }
     await Store.requestDurability();
@@ -487,7 +485,7 @@
     });
 
     $('btnExit').addEventListener('click', () => {
-      toast('Backup & Exit is built at Stage 4 — your entries are already saved');
+      toast('Backup & Exit comes at Stage 4');
     });
 
     // if the app is left open across midnight into a new season, catch up quietly
