@@ -120,6 +120,7 @@
   }
 
   function clearJournal() {
+    $('j-date').value = isoLocal(new Date());
     $('j-text').value = '';
     journalPhotoIds = [];
     drawPhotoStrip();
@@ -201,11 +202,12 @@
 
   let draftTimer = null;
   function saveDraft() {
-    if (selectedId !== null) return;            // editing an entry, not writing a new one
+    if (editingId !== null) return;             // editing an entry, not writing a new one
     clearTimeout(draftTimer);
     draftTimer = setTimeout(async () => {
       await Store.setMeta('draft-factual', readFactual());
-      await Store.setMeta('draft-journal', { text: $('j-text').value, photoIds: journalPhotoIds });
+      await Store.setMeta('draft-journal',
+        { date: $('j-date').value, text: $('j-text').value, photoIds: journalPhotoIds });
     }, 400);
   }
 
@@ -215,6 +217,7 @@
     if (factual) writeFactual(factual);
     if (!$('f-date').value) $('f-date').value = isoLocal(new Date());
     if (journal) {
+      if (journal.date) $('j-date').value = journal.date;
       $('j-text').value = journal.text || '';
       journalPhotoIds = (journal.photoIds || []).slice();
     }
@@ -345,12 +348,13 @@
     // set the half-written entry aside so it comes back when editing finishes
     stashedDraft = {
       factual: readFactual(),
-      journal: { text: $('j-text').value, photoIds: journalPhotoIds.slice() }
+      journal: { date: $('j-date').value, text: $('j-text').value, photoIds: journalPhotoIds.slice() }
     };
 
     editingId = entry.id;
     if (entry.kind === 'journal') {
       clearFactual();
+      $('j-date').value = entry.date || isoLocal(new Date());
       $('j-text').value = entry.text || '';
       journalPhotoIds = (entry.photoIds || []).slice();
       await drawPhotoStrip();
@@ -370,6 +374,7 @@
     setEditingUI(null);
     if (stashedDraft) {
       writeFactual(stashedDraft.factual);
+      $('j-date').value = stashedDraft.journal.date || '';
       $('j-text').value = stashedDraft.journal.text || '';
       journalPhotoIds = stashedDraft.journal.photoIds.slice();
       stashedDraft = null;
@@ -378,6 +383,7 @@
       clearJournal();
     }
     if (!$('f-date').value) $('f-date').value = isoLocal(new Date());
+    if (!$('j-date').value) $('j-date').value = isoLocal(new Date());
     if (!keepSelected) setSelection(null);
     updateListButtons();
     await drawPhotoStrip();
@@ -421,7 +427,7 @@
     }
     await Store.putEntry({
       kind: 'journal',
-      date: $('f-date').value || isoLocal(new Date()),
+      date: $('j-date').value || isoLocal(new Date()),
       created: Date.now(),
       text,
       photoIds: journalPhotoIds.slice()
@@ -439,7 +445,7 @@
     if (entry.kind === 'journal') {
       entry.text = $('j-text').value.trim();
       entry.photoIds = journalPhotoIds.slice();
-      entry.date = $('f-date').value || entry.date;
+      entry.date = $('j-date').value || entry.date;
     } else {
       Object.assign(entry, readFactual());
     }
@@ -478,6 +484,7 @@
     applySeason(today);
     showToday(today);
     $('f-date').value = isoLocal(today);
+    $('j-date').value = isoLocal(today);
 
     if (!(await Store.available())) {
       toast('This browser will not let the diary save anything');
@@ -499,6 +506,7 @@
 
     // typing anywhere keeps the unfinished entry safe
     for (const f of FACTUAL_FIELDS) $('f-' + f).addEventListener('input', saveDraft);
+    $('j-date').addEventListener('input', saveDraft);
     $('j-text').addEventListener('input', saveDraft);
 
     $('btnSaveFactual').addEventListener('click', saveFactual);

@@ -83,15 +83,6 @@ const MonthEnd = (() => {
 
   const text = (t, opts = {}) => new D.TextRun({ text: t, font: BODY_FONT, color: INK, size: 24, ...opts });
 
-  // A line break that also drops below any photograph floating beside the text, so a divider
-  // always sits on its own line under both. The library has no switch for this, so it is
-  // written as the raw Word instruction.
-  const clearingBreak = () => new D.Paragraph({
-    spacing: { before: 0, after: 0 },
-    children: [D.ImportedXmlComponent.fromXmlString(
-      '<w:r><w:br w:type="textWrapping" w:clear="all"/></w:r>').root[0]]
-  });
-
   const dividerImage = (art, w, h) =>
     new D.ImageRun({ type: 'png', data: art.divider, transformation: { width: w, height: h } });
 
@@ -183,27 +174,42 @@ const MonthEnd = (() => {
     return D.Packer.toBlob(doc);
   }
 
-  /* Document 2 — the journal: portrait, a full-date heading for each day, small photographs
-     with the writing wrapped around them, and a divider between one day and the next. */
-  async function photoImage(id, box, float) {
+  /* Document 2 — the journal: portrait, a full-date heading for each day, the writing, and
+     beneath it that entry's photographs in tidy rows — all the same height, evenly spaced,
+     three to a row — with a divider between one day and the next. */
+  const PHOTO_HEIGHT = 130;   // px; three landscape photographs fit across the page
+  const PHOTO_MAX_WIDTH = 180; // a very wide photograph is shrunk to fit rather than crowding the row
+  const PER_ROW = 3;
+
+  async function photoImage(id) {
     const record = await Store.getPhoto(id);
     if (!record) return null;
     const bitmap = await createImageBitmap(record.blob);
-    const scale = box / Math.max(bitmap.width, bitmap.height);
+    const scale = Math.min(PHOTO_HEIGHT / bitmap.height, PHOTO_MAX_WIDTH / bitmap.width);
     const size = { width: Math.round(bitmap.width * scale), height: Math.round(bitmap.height * scale) };
     if (bitmap.close) bitmap.close();
     const data = new Uint8Array(await record.blob.arrayBuffer());
-    const opts = { type: 'jpg', data, transformation: size };
-    if (float) {
-      opts.floating = {
-        horizontalPosition: { relative: D.HorizontalPositionRelativeFrom.MARGIN, align: float },
-        verticalPosition: { relative: D.VerticalPositionRelativeFrom.PARAGRAPH, offset: 0 },
-        wrap: { type: D.TextWrappingType.SQUARE,
-                side: float === 'right' ? D.TextWrappingSide.LEFT : D.TextWrappingSide.RIGHT },
-        margins: { left: 60480, right: 60480, top: 60480, bottom: 60480 }
-      };
+    return new D.ImageRun({ type: 'jpg', data, transformation: size });
+  }
+
+  async function photoRows(ids) {
+    const images = [];
+    for (const id of ids) {
+      const img = await photoImage(id);
+      if (img) images.push(img);
     }
-    return new D.ImageRun(opts);
+    const rows = [];
+    for (let i = 0; i < images.length; i += PER_ROW) {
+      const row = [];
+      images.slice(i, i + PER_ROW).forEach((img, n) => {
+        if (n) row.push(new D.TextRun({ text: '     ' }));   // an even gap between photographs
+        row.push(img);
+      });
+      rows.push(new D.Paragraph({
+        alignment: D.AlignmentType.CENTER, spacing: { before: 60, after: 120 }, children: row
+      }));
+    }
+    return rows;
   }
 
   async function buildJournal(entries, key, art) {
@@ -215,12 +221,9 @@ const MonthEnd = (() => {
     }
 
     const children = [...titleBlock(art, key)];
-    let side = 'right';                                   // photographs alternate right and left
-    const nextSide = () => { const s = side; side = side === 'right' ? 'left' : 'right'; return s; };
 
     for (let d = 0; d < days.length; d++) {
       if (d > 0) {
-        children.push(clearingBreak());
         children.push(new D.Paragraph({
           alignment: D.AlignmentType.CENTER, spacing: { before: 160, after: 120 }, keepNext: true,
           children: [dividerImage(art, 380, 22)]
@@ -236,33 +239,17 @@ const MonthEnd = (() => {
         // Every line she starts is its own paragraph — on a phone, Enter means a new paragraph,
         // and a line break inside justified text would stretch the line before it.
         const paras = (entry.text || '').split('\n').map(p => p.trim()).filter(Boolean);
-        const photos = (entry.photoIds || []).slice();
-
-        // each paragraph carries one photograph beside it, alternating sides
-        for (const para of paras) {
-          const runs = [];
-          if (photos.length) {
-            const img = await photoImage(photos.shift(), 176, nextSide());
-            if (img) runs.push(img);
-          }
+        // Writing stays on the same page as its first row of photographs: all of it when the
+        // entry is short, otherwise just the closing paragraph.
+        const hasPhotos = (entry.photoIds || []).length > 0;
+        paras.forEach((para, i) => {
+          const keep = hasPhotos && (paras.length <= 4 || i === paras.length - 1);
           children.push(new D.Paragraph({
-            spacing: { after: 140 }, alignment: D.AlignmentType.JUSTIFIED,
-            children: [...runs, text(para)]
+            spacing: { after: 140 }, alignment: D.AlignmentType.JUSTIFIED, keepNext: keep,
+            children: [text(para)]
           }));
-        }
-
-        // photographs left over once the writing runs out sit together in a row beneath it
-        if (photos.length) {
-          if (paras.length) children.push(clearingBreak());
-          const row = [];
-          for (const id of photos) {
-            const img = await photoImage(id, 150, null);
-            if (img) row.push(img, new D.TextRun({ text: '  ' }));
-          }
-          children.push(new D.Paragraph({
-            alignment: D.AlignmentType.CENTER, spacing: { before: 80, after: 140 }, children: row
-          }));
-        }
+        });
+        children.push(...await photoRows(entry.photoIds || []));
       }
     }
 

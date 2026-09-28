@@ -20,17 +20,24 @@
 > phone; and EB Garamond is now bundled (Bold, subset to the characters used, 27 KB) so the
 > field labels look right offline. All three typefaces now ship with the app.
 >
-> **Stage 3 — month end: BUILT 28/09/2026, awaiting Kathryn's test.** `monthend.js` builds the
+> **Stage 3 — month end: BUILT and TESTED by Kathryn, 28/09/2026.** `monthend.js` builds the
 > table and journal documents on the phone from the real entries, to the approved design (one
 > palette, the gold frame, the month's own seasonal motif), using the docx library in `vendor/`
 > and artwork in `assets/doc/`. On opening, every earlier month holding entries is offered
 > oldest first; months with no entries are skipped. One tap downloads both documents; the month
-> clears only after they were made, downloaded, and she confirms. Verified end to end in a
-> browser and the documents rendered through LibreOffice: two-page journals keep the frame and
-> keep each day's heading with its writing; photographs alternate sides, with any beyond the
-> number of paragraphs set in a row beneath; an empty journal or table says so plainly.
-> Every line typed in the journal becomes its own paragraph (Enter on a phone means a new one).
-> She tests it at her own GitHub Pages address, since downloads are the thing being tested.
+> clears only after they were made, downloaded, and she confirms. She tested it on her GitHub
+> Pages address (https://spr1ngw1ll0wtr33.github.io/MyGardenDiary/): downloads and the
+> confirm-then-clear worked exactly as they should. Every line typed in the journal becomes its
+> own paragraph (Enter on a phone means a new one); an empty journal or table says so plainly.
+>
+> **Two changes from her test, 28/09/2026:** (1) the journal has its own Date box above the
+> writing, prefilled with today — she kept saving August writing under today's date because the
+> only date box was up in the table section. Each section now keeps its own date; Edit shows a
+> journal entry's date in the journal's box; the half-written journal keeps its date too.
+> (2) Photographs in the journal document no longer float beside the text (seven photos on
+> short paragraphs cascaded untidily). She chose option A: a tidy centred row beneath each
+> entry — same height, evenly spaced, three to a row, never overlapping. See design/PALETTE.md.
+> Awaiting her retest of these two.
 >
 > **For Stage 4 (backup):** take an automatic backup just before a month is cleared, as a second
 > safety net behind the documents. Then wire up Backup & Exit, and restore.
@@ -79,7 +86,7 @@ made until the next proper exit.
 Both .docx, both built from simple document features that LibreOffice Writer handles reliably; nothing Word-only. Each month's pair loads into a seasonal template: a page background colour drawn from that season's palette (a lighter accent for Winter, never the dark app background), the app's border style as a page border, a title in the palette font — e.g. "August 2026" — with the season's motif beside it, and the content flowing beneath as normal document text (no floating text boxes, so editing and page overflow behave properly).
 
 - **Table document** — landscape; eight columns matching the eight fields, one row per factual entry, dates as dd.mm.yyyy.
-- **Journal document** — portrait; each day headed with its full date ("Tuesday 12 August 2026"), the written entries, and small photographs with text wrap.
+- **Journal document** — portrait; each day headed with its full date ("Tuesday 12 August 2026"), the written entries, and each entry's photographs in tidy rows of three beneath it (changed from text wrap at Kathryn's request, 28/09/2026).
 - File names: `My-Garden-Diary-Table-2026-08.docx`, `My-Garden-Diary-Journal-2026-08.docx`.
 
 ### Look and feel

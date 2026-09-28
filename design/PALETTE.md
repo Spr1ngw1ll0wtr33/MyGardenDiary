@@ -106,11 +106,16 @@ with the thin gold ring, rounded-square. Fixed all year.
 Pale Cream #FBF6E8 page; gold frame and squiggle dividers; title "My Garden Diary" in Boecklins
 Universe, Mustard #D2B161, sized above the month date in Glass Antiqua, Seafoam #A1B5A0; day
 headings Seafoam; mustard table header; dividers separate one day from the next (never under a
-heading), each divider preceded by a Word clearing break so it always sits below both the text
-and the photographs. The frame is composited ornament-aware at print resolution
+heading). The frame is composited ornament-aware at print resolution
 (design/frame-a4-*.png): corners and centre ornaments at true shape, side rails taken as the
 full span between corner cuts so the junctions are seamless. Table columns total
 13,400 dxa. Fonts are named in the files; they fall back to an ordinary serif on machines
 without them. Generator: design/samples/gen-docs.js (docx 9.7.1, MIT).
 
 Both sample documents APPROVED by Kathryn on 04/09/2026 after her LibreOffice check.
+
+**Photographs in the journal (Kathryn's decision, 28/09/2026 — option A):** no text wrap.
+Each entry's writing comes first, then its photographs beneath in tidy centred rows: all
+130px tall, width by their own shape (a very wide one capped at 180px), evenly spaced, three
+to a row, never overlapping. A short entry's writing is kept on the same page as its first row.
+Any photograph can still be set to wrap by hand in LibreOffice (right-click → Wrap).

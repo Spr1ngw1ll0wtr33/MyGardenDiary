@@ -102,6 +102,7 @@ body {
 /* ---------- fields ---------- */
 .frow { display: flex; gap: 8px; margin-bottom: 8px; }
 .fld  { flex: 1; min-width: 0; }
+.fld.half { flex: 0 0 calc(50% - 4px); }   /* the journal's date, as wide as the one above */
 
 .fld label {
   display: block;
