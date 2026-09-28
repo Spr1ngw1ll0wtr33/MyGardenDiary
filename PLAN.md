@@ -62,7 +62,12 @@
 >   everything. If the diary holds anything, a backup of it is saved first, so a wrong choice
 >   can be undone. Restoring is all-or-nothing: if it fails part-way, nothing is changed.
 >
-> **Stage 5 — installation: BUILT 28/09/2026, awaiting Kathryn's full check on her phone.**
+> **Stage 5 — installation: COMPLETE, 28/09/2026. THE BUILD IS COMPLETE.** Installed on
+> Kathryn's phone; all 28 checks on checklist.html passed, including offline working, Close the
+> diary, and a trial month end whose documents opened correctly in LibreOffice. She moves files
+> phone → PC with Zorin Connect, into a folder in Documents that her PC backs up to her cloud.
+>
+> Stage 5 detail:
 > - `manifest.json`: installs as "My Garden Diary", full screen, portrait, with the grape-vine
 >   icon (`icons/`, made from `assets/icon.svg` by `tools/build-icons.py`; the "maskable"
 >   version sits safely inside Samsung's icon shape). The status bar takes the season's colour.
