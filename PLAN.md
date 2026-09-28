@@ -37,7 +37,8 @@
 > (2) Photographs in the journal document no longer float beside the text (seven photos on
 > short paragraphs cascaded untidily). She chose option A: a tidy centred row beneath each
 > entry — same height, evenly spaced, three to a row, never overlapping. See design/PALETTE.md.
-> Awaiting her retest of these two.
+> Both retested by Kathryn on GitHub Pages, 28/09/2026: working (a real August month with
+> 5, 7 and 3 photographs per entry sat in tidy rows in LibreOffice).
 >
 > **For Stage 4 (backup):** take an automatic backup just before a month is cleared, as a second
 > safety net behind the documents. Then wire up Backup & Exit, and restore.
