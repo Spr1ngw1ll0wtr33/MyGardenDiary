@@ -40,19 +40,36 @@ html = re.sub(r'<link rel="stylesheet" href="seasons\.css">\s*<link rel="stylesh
 html = html.replace('src="assets/motifs/divider.svg"', f'src="{data_uri("assets/motifs/divider.svg", SVG)}"')
 html = html.replace('src="assets/motifs/autumn.svg"', f'src="{MOTIFS["autumn"]}"')
 
-motif_map = ',\n  '.join(f'{name}: "{uri}"' for name, uri in MOTIFS.items())
-scripts = (
-    '<script>\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\n</script>\n'
-    '<script>\n' + read('storage.js') + '\n</script>\n'
-    '<script>\n' + read('app.js') + '\n</script>'
-)
-html = html.replace('<script src="storage.js"></script>\n<script src="app.js"></script>', scripts)
-
-# Nothing may still be *fetched* from outside the file. (app.js keeps plain asset paths as
-# fallbacks for the served version; those are inert here, so only real references are checked.)
+# Nothing may still be *fetched* from outside the file. (The code keeps plain asset paths as
+# fallbacks for the served version; those are inert here, so only markup and styles are checked,
+# before the scripts go in.)
 loads = re.findall(r'(?:src|href)="(?!data:)([^"]+)"|url\(\s*(?!data:)[\'"]?([^)\'"]+)', html)
-outside = sorted({(a or b) for a, b in loads})
+outside = sorted({(a or b) for a, b in loads if (a or b) not in
+                  ('vendor/docx.iife.js', 'storage.js', 'monthend.js', 'app.js')})
 assert not outside, f'the bundle still loads from outside itself: {outside}'
+
+motif_map = ',\n  '.join(f'{name}: "{uri}"' for name, uri in MOTIFS.items())
+PNG = 'image/png'
+doc_assets = {
+    'framePortrait':  data_uri('assets/doc/frame-portrait.png', PNG),
+    'frameLandscape': data_uri('assets/doc/frame-landscape.png', PNG),
+    'divider':        data_uri('assets/doc/divider.png', PNG),
+    **{s: data_uri(f'assets/doc/motif-{s}.png', PNG) for s in ('spring', 'summer', 'autumn', 'winter')},
+}
+doc_map = ',\n  '.join(f'{k}: "{v}"' for k, v in doc_assets.items())
+
+inline = lambda code: '<script>\n' + code.replace('</script', '<\\/script') + '\n</script>'
+scripts = '\n'.join([
+    '<script>\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\nwindow.DOC_ASSETS = {\n  ' + doc_map + '\n};\n</script>',
+    inline(read('vendor/docx.iife.js')),
+    inline(read('storage.js')),
+    inline(read('monthend.js')),
+    inline(read('app.js')),
+])
+tags = ('<script src="vendor/docx.iife.js"></script>\n<script src="storage.js"></script>\n'
+        '<script src="monthend.js"></script>\n<script src="app.js"></script>')
+assert tags in html, 'index.html script tags have changed — update the bundler'
+html = html.replace(tags, scripts)
 
 OUT.parent.mkdir(exist_ok=True)
 OUT.write_text(html)

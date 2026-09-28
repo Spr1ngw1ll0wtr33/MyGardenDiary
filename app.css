@@ -293,8 +293,59 @@ select.in {
   max-width: 320px;
   width: 100%;
 }
-.ask-box p { margin: 0 0 6px; font-size: 1rem; }
+.ask-box p { margin: 0 0 6px; font-size: 1rem; white-space: pre-line; }
 
 @media (prefers-reduced-motion: reduce) {
   .toast { transition: none; }
 }
+
+/* ---------- the month-end screen ----------
+   Covers the whole app, in the season's own dress, until the month is written out. */
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9;                 /* under the confirm box and the notice, over everything else */
+  background: var(--bg);
+  overflow-y: auto;
+}
+.gate[hidden] { display: none; }
+body.gate-open { overflow: hidden; }
+
+.gate-body {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 4px 30px 42px;
+  text-align: center;
+  color: var(--sub);
+}
+.gate-body p { font-size: 1.02rem; line-height: 1.5; margin: 0 0 12px; }
+.gate-kicker {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: .75rem !important;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  margin: 16px 0 2px !important;
+}
+.gate-month { font-size: 1.9rem; font-weight: 400; color: var(--title); margin: 0 0 4px; }
+.gate-summary { font-size: .95rem !important; margin-bottom: 20px !important; }
+
+.gate-files { list-style: none; padding: 0; margin: 6px 0 14px; }
+.gate-files li {
+  background: var(--cream);
+  color: var(--box-ink);
+  border: 1px solid rgba(201, 162, 77, .8);
+  border-radius: 9px;
+  padding: 6px 10px;
+  margin: 6px 0;
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+.gate-error {
+  background: var(--cream);
+  color: #7C2E24;
+  border: 1px solid var(--crit);
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.btnrow.center { justify-content: center; }

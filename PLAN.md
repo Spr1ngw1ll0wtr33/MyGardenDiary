@@ -20,11 +20,21 @@
 > phone; and EB Garamond is now bundled (Bold, subset to the characters used, 27 KB) so the
 > field labels look right offline. All three typefaces now ship with the app.
 >
-> **Next: Stage 3 — month end.** Generate both documents on the phone from the real entries
-> (design/samples/gen-docs.js is the approved recipe), the gate that blocks the way through until
-> the download is taken, the confirm-then-clear, and the skipped-months catch-up (no entries, no
-> documents). Stage 4 is backup and restore, which is when Backup & Exit gets wired up.
-> Stage 5 is installation via GitHub Pages.
+> **Stage 3 — month end: BUILT 28/09/2026, awaiting Kathryn's test.** `monthend.js` builds the
+> table and journal documents on the phone from the real entries, to the approved design (one
+> palette, the gold frame, the month's own seasonal motif), using the docx library in `vendor/`
+> and artwork in `assets/doc/`. On opening, every earlier month holding entries is offered
+> oldest first; months with no entries are skipped. One tap downloads both documents; the month
+> clears only after they were made, downloaded, and she confirms. Verified end to end in a
+> browser and the documents rendered through LibreOffice: two-page journals keep the frame and
+> keep each day's heading with its writing; photographs alternate sides, with any beyond the
+> number of paragraphs set in a row beneath; an empty journal or table says so plainly.
+> Every line typed in the journal becomes its own paragraph (Enter on a phone means a new one).
+> She tests it at her own GitHub Pages address, since downloads are the thing being tested.
+>
+> **For Stage 4 (backup):** take an automatic backup just before a month is cleared, as a second
+> safety net behind the documents. Then wire up Backup & Exit, and restore.
+> Stage 5 is installation: offline working, the grape-vine icon, and the launcher entry.
 
 ## Context
 

@@ -137,6 +137,45 @@
   </main>
 </div>
 
+<div class="gate" id="gate" hidden>
+  <div class="frame">
+    <div class="gate-body" role="dialog" aria-modal="true" aria-labelledby="gateMonth">
+      <h1 class="apptitle">My Garden Diary</h1>
+      <img class="divider" src="assets/motifs/divider.svg" alt="">
+      <p class="gate-kicker">Month end</p>
+      <h2 class="gate-month" id="gateMonth">August 2026</h2>
+      <p class="gate-summary" id="gateSummary"></p>
+
+      <div data-state="ready">
+        <p>Your <span id="gateMonthName">August</span> entries are ready to be written out to their
+           two documents. Download them to carry on &mdash; nothing is cleared until you say so.</p>
+        <p class="gate-error" id="gateError" hidden>The documents could not be made, so nothing has
+           been cleared. Please try again.</p>
+        <div class="btnrow center">
+          <button type="button" class="btn save big" id="gateDownload">Download both documents</button>
+        </div>
+      </div>
+
+      <div data-state="working" hidden>
+        <p>Preparing your documents&hellip;</p>
+      </div>
+
+      <div data-state="taken" hidden>
+        <p>Both documents have been sent to your Downloads folder:</p>
+        <ul class="gate-files">
+          <li id="gateTableName"></li>
+          <li id="gateJournalName"></li>
+        </ul>
+        <p>Check they are both there, then clear <span class="gateClearName">August</span> to start afresh.</p>
+        <div class="btnrow split">
+          <button type="button" class="btn aux big" id="gateAgain">Download again</button>
+          <button type="button" class="btn crit big" id="gateClear">Clear <span class="gateClearName">August</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="ask" id="ask" hidden>
@@ -149,7 +188,9 @@
   </div>
 </div>
 
+<script src="vendor/docx.iife.js"></script>
 <script src="storage.js"></script>
+<script src="monthend.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

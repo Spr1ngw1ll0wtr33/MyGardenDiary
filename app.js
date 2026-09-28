@@ -488,6 +488,15 @@
     await loadDraft();
     await refresh();
 
+    // The month end: an earlier month with entries is written out before anything else.
+    MonthEnd.wire();
+    document.addEventListener('diary:changed', async () => {
+      await refresh();
+      if (editingId !== null && !entries.some(e => e.id === editingId)) await stopEditing();
+    });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) MonthEnd.check(); });
+    await MonthEnd.check();
+
     // typing anywhere keeps the unfinished entry safe
     for (const f of FACTUAL_FIELDS) $('f-' + f).addEventListener('input', saveDraft);
     $('j-text').addEventListener('input', saveDraft);
