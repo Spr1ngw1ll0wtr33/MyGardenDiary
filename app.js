@@ -41,6 +41,10 @@
     const season = seasonFor(date);
     document.body.className = 'season-' + season;
     $('seasonMotif').src = MOTIF_SRC[season];
+    // the phone's status bar takes the season's background colour too
+    const bg = getComputedStyle(document.body).getPropertyValue('--bg').trim();
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta && bg) meta.content = bg;
   }
 
   /* ---------------- dates ---------------- */
@@ -69,12 +73,12 @@
   /* ---------------- small helpers ---------------- */
 
   let toastTimer = null;
-  function toast(message) {
+  function toast(message, ms = 2400) {
     const el = $('toast');
     el.textContent = message;
     el.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+    toastTimer = setTimeout(() => el.classList.remove('show'), ms);
   }
 
   function confirmAsk(question, yesLabel = 'Yes, delete') {
@@ -567,10 +571,30 @@
     location.reload();                          // start afresh with the restored diary
   }
 
+  /* ---------------- installed and offline ---------------- */
+
+  /* The offline copy of the app (service-worker.js). When a newer version of the app has been
+     put online, the phone fetches it quietly in the background and says so once. */
+  function keepOfflineCopy() {
+    if (!('serviceWorker' in navigator) || window.SINGLE_FILE) return;
+    const hadCopy = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' })
+      .then((reg) => {
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) reg.update().catch(() => {});   // no internet: no matter
+        });
+      })
+      .catch((err) => console.error('The offline copy could not be set up', err));
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (hadCopy) toast('The diary has been updated — close and reopen it to see the changes', 6000);
+    });
+  }
+
   /* ---------------- start ---------------- */
 
   async function start() {
     const today = new Date();
+    keepOfflineCopy();
     applySeason(today);
     showToday(today);
     $('f-date').value = isoLocal(today);

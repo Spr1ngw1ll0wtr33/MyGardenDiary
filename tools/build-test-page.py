@@ -34,7 +34,7 @@ css = css.replace("url('assets/frame.png')", f"url({data_uri('assets/frame.png',
 
 # --- page: swap the stylesheet links for the folded styles, embed the images ---
 html = read('index.html')
-html = re.sub(r'\n?<link rel="icon"[^>]*>', '', html)
+html = re.sub(r'\n?<link rel="(?:icon|manifest)"[^>]*>', '', html)
 html = re.sub(r'<link rel="stylesheet" href="seasons\.css">\s*<link rel="stylesheet" href="app\.css">',
               f'<style>\n{css}\n</style>', html)
 html = html.replace('src="assets/motifs/divider.svg"', f'src="{data_uri("assets/motifs/divider.svg", SVG)}"')
@@ -63,7 +63,7 @@ doc_map = ',\n  '.join(f'{k}: "{v}"' for k, v in doc_assets.items())
 inline = lambda code: ('<script>\n' + code.replace('</script', '<\\/script').replace('\ufffd', '\\uFFFD')
                        + '\n</script>')
 scripts = '\n'.join([
-    '<script>\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\nwindow.DOC_ASSETS = {\n  ' + doc_map + '\n};\n</script>',
+    '<script>\nwindow.SINGLE_FILE = true;   // no installing or offline copy for the test page\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\nwindow.DOC_ASSETS = {\n  ' + doc_map + '\n};\n</script>',
     inline(read('vendor/docx.iife.js')),
     inline(read('storage.js')),
     inline(read('backup.js')),

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Garden Diary — install and check</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<style>
+  @font-face { font-family: 'Glass Antiqua'; src: url('assets/fonts/GlassAntiqua-Regular.ttf') format('truetype'); font-display: swap; }
+  @font-face { font-family: 'Boecklins Universe'; src: url('assets/fonts/BoecklinsUniverse.ttf') format('truetype'); font-display: swap; }
+  :root { --cream: #FBF6E8; --gold: #C9A24D; --ink: #221E14; --soft: #5B5443; --green: #5D7865; --tick: #F1E2B8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--ink);
+         font: 17px/1.55 Georgia, 'Times New Roman', serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-family: 'Boecklins Universe', Georgia, serif; font-weight: 400; color: var(--green);
+       font-size: 2rem; text-align: center; margin: 8px 0 0; }
+  .sub { text-align: center; color: var(--soft); margin: 2px 0 22px; }
+  h2 { font-family: 'Glass Antiqua', Georgia, serif; font-weight: 400; font-size: 1.45rem; color: var(--green);
+       border-top: 2px solid var(--gold); padding-top: 14px; margin: 30px 0 8px; }
+  h3 { font-size: 1.05rem; margin: 20px 0 4px; }
+  p { margin: 6px 0; }
+  ol.steps { padding-left: 1.4em; }
+  ol.steps li { margin: 6px 0; }
+  .note { background: #fff; border: 1px solid var(--gold); border-radius: 9px; padding: 10px 14px; margin: 12px 0; }
+  ul.check { list-style: none; padding: 0; margin: 4px 0; }
+  ul.check li { margin: 2px 0; }
+  ul.check label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+  ul.check input { width: 20px; height: 20px; margin: 3px 0 0; flex: none; accent-color: var(--green); }
+  ul.check input:checked + span { color: var(--soft); }
+  ul.check label:has(input:checked) { background: var(--tick); }
+  .count { text-align: center; color: var(--soft); margin-top: 26px; }
+  button { font: inherit; background: none; border: 1px solid var(--gold); border-radius: 9px; padding: 6px 14px; color: var(--soft); cursor: pointer; }
+  a { color: var(--green); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>My Garden Diary</h1>
+<p class="sub">Installing it on your phone, and checking everything works</p>
+
+<h2>1. Install the diary on your phone</h2>
+<ol class="steps">
+  <li>On your phone, open <strong>Chrome</strong> and go to<br>
+      <strong>spr1ngw1ll0wtr33.github.io/MyGardenDiary</strong></li>
+  <li>Tap the <strong>three dots</strong> (⋮) at the top right.</li>
+  <li>Tap <strong>Install app</strong>. (On some versions it is <strong>Add to home screen</strong>,
+      then <strong>Install</strong>.)</li>
+  <li>Tap <strong>Install</strong> again to confirm. The grape-vine icon appears on your home screen
+      and in your apps.</li>
+  <li>From now on, open the diary from its icon, not from Chrome.</li>
+</ol>
+<div class="note">
+  <p><strong>Where your entries live:</strong> the installed diary shares its storage with Chrome on the
+     phone, so anything you typed into the diary in Chrome on the phone will be there too.
+     What you typed on your PC stays on the PC; the two never mix.</p>
+</div>
+
+<h2>2. Moving files from the phone to your PC</h2>
+<p>Backups and month-end documents are saved in the phone's <strong>Downloads</strong> folder. Two ways
+   to move them across, neither of which uses the internet or your cloud account:</p>
+<h3>By USB cable (nothing to install)</h3>
+<ol class="steps">
+  <li>Plug the phone into the PC with its charging cable.</li>
+  <li>On the phone, pull down from the top of the screen and tap the <strong>USB</strong> notice, then
+      choose <strong>Transferring files</strong> (sometimes called <strong>File transfer</strong>).</li>
+  <li>On the PC, open <strong>Files</strong>. The phone appears in the list on the left.</li>
+  <li>Open <strong>Internal storage</strong>, then <strong>Download</strong>, and copy the files into a
+      folder on the PC.</li>
+</ol>
+<h3>By Zorin Connect (over your home Wi-Fi)</h3>
+<p>Zorin OS has <strong>Zorin Connect</strong> built in. With its free phone app installed from the
+   Play Store and the two paired once, you can send a file from the phone's Downloads straight to the
+   PC with <strong>Share</strong>. Files go directly between the two over your home Wi-Fi, never through
+   the internet. It asks for a number of phone permissions; you only need file sharing, and can say no
+   to the rest.</p>
+
+<h2>3. Check every function on the phone</h2>
+<p>Tick each one as it works. The ticks are remembered on whichever device you tick them on.</p>
+
+<h3>Installed and looking right</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>The grape-vine icon shows in your apps and in the recent-apps view.</span></label></li>
+  <li><label><input type="checkbox"><span>It opens full screen, with no Chrome address bar.</span></label></li>
+  <li><label><input type="checkbox"><span>The strip at the very top of the screen matches the season's background colour.</span></label></li>
+  <li><label><input type="checkbox"><span>The title, date, motif, labels and buttons look as they did on the PC.</span></label></li>
+</ul>
+
+<h3>Working without the internet</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>Swipe the diary away, turn on <strong>Aeroplane mode</strong>, open the diary: it opens and works normally.</span></label></li>
+  <li><label><input type="checkbox"><span>Turn Aeroplane mode off again afterwards.</span></label></li>
+</ul>
+
+<h3>What I did</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>The date is filled in with today, in dd/mm/yyyy.</span></label></li>
+  <li><label><input type="checkbox"><span>Each drop-down list opens and shows its choices.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Save</strong> adds the entry to This month and empties the form.</span></label></li>
+</ul>
+
+<h3>Journal</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>The journal's own date is filled in with today, and can be changed.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Add Photos</strong> lets you pick several photographs at once from the gallery.</span></label></li>
+  <li><label><input type="checkbox"><span>The ✕ on a photograph removes it.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Save</strong> adds the journal entry to This month under the date you chose.</span></label></li>
+</ul>
+
+<h3>Nothing lost</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>Type half an entry, swipe the diary away, reopen it: your half-written entry is still there.</span></label></li>
+</ul>
+
+<h3>This month</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>Tapping an entry highlights it, without the page jumping.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Edit</strong> brings it up into the form; Save becomes <strong>Update</strong>.</span></label></li>
+  <li><label><input type="checkbox"><span>Change something, tap <strong>Update</strong>: the entry changes and no copy is made.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Cancel</strong> puts back whatever you were writing before.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Delete</strong> asks first, then removes the entry.</span></label></li>
+</ul>
+
+<h3>Backup &amp; Exit, and restore</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span><strong>Backup &amp; Exit</strong> shows the backup's name, and the file is in the phone's Downloads (Files app, then Downloads).</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Close the diary</strong> closes it. (If instead it says your phone won't let it close, tell Claude.)</span></label></li>
+  <li><label><input type="checkbox"><span>Delete a test entry, then <strong>Restore from a backup</strong> at the foot of the page and choose that backup: the entry comes back.</span></label></li>
+</ul>
+
+<h3>Month end, with test entries</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>Make a few test entries dated <strong>last month</strong>, including a journal entry with photographs.</span></label></li>
+  <li><label><input type="checkbox"><span>Swipe the diary away and reopen it: the month-end screen appears for last month.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Download both documents</strong> (if Chrome asks to allow several downloads, say yes): both are in Downloads.</span></label></li>
+  <li><label><input type="checkbox"><span><strong>Clear</strong> asks first, then saves a backup and clears the month; this month's entries remain.</span></label></li>
+  <li><label><input type="checkbox"><span>Move the two documents to the PC; both open properly in LibreOffice.</span></label></li>
+</ul>
+
+<h3>Before real use</h3>
+<ul class="check">
+  <li><label><input type="checkbox"><span>Delete any test entries still in This month, so the real diary starts clean.</span></label></li>
+</ul>
+
+<p class="count" id="count"></p>
+<p style="text-align:center"><button type="button" id="reset">Clear all ticks</button></p>
+
+</main>
+<script>
+  // Ticks are remembered in this browser only; if that isn't allowed, the page still works.
+  const boxes = [...document.querySelectorAll('ul.check input')];
+  const KEY = 'garden-diary-checklist';
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (_) { return []; } };
+  const store = () => { try { localStorage.setItem(KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (_) {} };
+  const count = () => {
+    const done = boxes.filter(b => b.checked).length;
+    document.getElementById('count').textContent =
+      done === boxes.length ? 'All ' + done + ' checked.' : done + ' of ' + boxes.length + ' checked';
+  };
+  load().forEach((v, i) => { if (boxes[i]) boxes[i].checked = !!v; });
+  boxes.forEach(b => b.addEventListener('change', () => { store(); count(); }));
+  document.getElementById('reset').addEventListener('click', () => {
+    boxes.forEach(b => { b.checked = false; }); store(); count();
+  });
+  count();
+</script>
+</body>
+</html>

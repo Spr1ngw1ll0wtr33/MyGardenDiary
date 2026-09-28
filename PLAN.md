@@ -62,7 +62,22 @@
 >   everything. If the diary holds anything, a backup of it is saved first, so a wrong choice
 >   can be undone. Restoring is all-or-nothing: if it fails part-way, nothing is changed.
 >
-> Stage 5 is installation: offline working, the grape-vine icon, and the launcher entry.
+> **Stage 5 — installation: BUILT 28/09/2026, awaiting Kathryn's full check on her phone.**
+> - `manifest.json`: installs as "My Garden Diary", full screen, portrait, with the grape-vine
+>   icon (`icons/`, made from `assets/icon.svg` by `tools/build-icons.py`; the "maskable"
+>   version sits safely inside Samsung's icon shape). The status bar takes the season's colour.
+> - `service-worker.js`: keeps a copy of every app file on the phone (31 files, 4 MB) so it
+>   opens and works with no internet — including making the month-end documents. It never
+>   touches entries or photographs. When a new version is put online the phone fetches it
+>   quietly and says once "The diary has been updated — close and reopen it".
+>   **Run `python3 tools/stamp-offline.py` before committing any change to the app**, or the
+>   phone keeps the old copy.
+> - Verified in Chromium: Chrome reports it installable with no problems; opened, saved,
+>   made both documents, backed up and cleared a month with the connection switched off;
+>   the update notice appears when a new version goes online.
+> - `checklist.html` on her Pages address: install steps, two cloud-free ways to move files
+>   from phone to PC (USB cable, or Zorin Connect over home Wi-Fi), and a 28-point tick list of
+>   every function, for her full phone check.
 
 ## Context
 
