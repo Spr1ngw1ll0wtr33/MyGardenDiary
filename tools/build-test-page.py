@@ -58,7 +58,10 @@ doc_assets = {
 }
 doc_map = ',\n  '.join(f'{k}: "{v}"' for k, v in doc_assets.items())
 
-inline = lambda code: '<script>\n' + code.replace('</script', '<\\/script') + '\n</script>'
+# The library writes the Unicode replacement character literally inside its strings; as an
+# escape it means the same to the browser and survives publishing.
+inline = lambda code: ('<script>\n' + code.replace('</script', '<\\/script').replace('\ufffd', '\\uFFFD')
+                       + '\n</script>')
 scripts = '\n'.join([
     '<script>\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\nwindow.DOC_ASSETS = {\n  ' + doc_map + '\n};\n</script>',
     inline(read('vendor/docx.iife.js')),
