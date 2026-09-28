@@ -350,3 +350,20 @@ body.gate-open { overflow: hidden; }
   padding: 8px 10px;
 }
 .btnrow.center { justify-content: center; }
+
+/* ---------- restore ----------
+   Needed rarely (a new phone, or cleared browser data), so it is a quiet line of text at the
+   very foot of the page rather than another button competing with the everyday ones. */
+.restorerow { text-align: center; margin: 22px 0 0; }
+.quietlink {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  font-family: 'Glass Antiqua', Georgia, serif;
+  font-size: .85rem;
+  color: var(--sub);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.quietlink:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 6px; }

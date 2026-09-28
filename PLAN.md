@@ -20,7 +20,7 @@
 > phone; and EB Garamond is now bundled (Bold, subset to the characters used, 27 KB) so the
 > field labels look right offline. All three typefaces now ship with the app.
 >
-> **Stage 3 — month end: BUILT and TESTED by Kathryn, 28/09/2026.** `monthend.js` builds the
+> **Stage 3 — month end: COMPLETE, 28/09/2026.** Built, tested by Kathryn, corrected once, retested and approved. `monthend.js` builds the
 > table and journal documents on the phone from the real entries, to the approved design (one
 > palette, the gold frame, the month's own seasonal motif), using the docx library in `vendor/`
 > and artwork in `assets/doc/`. On opening, every earlier month holding entries is offered
@@ -40,8 +40,20 @@
 > Both retested by Kathryn on GitHub Pages, 28/09/2026: working (a real August month with
 > 5, 7 and 3 photographs per entry sat in tidy rows in LibreOffice).
 >
-> **For Stage 4 (backup):** take an automatic backup just before a month is cleared, as a second
-> safety net behind the documents. Then wire up Backup & Exit, and restore.
+> **Stage 4 — backup and restore: BUILT 28/09/2026, awaiting Kathryn's test.** `backup.js`.
+> A backup is one JSON file holding every entry, every photograph and any half-written work,
+> saved to Downloads as `My-Garden-Diary-Backup-YYYY-MM-DD-HHMM.json`.
+> - **Backup & Exit** saves a fresh backup, shows its file name, then offers Carry on or
+>   Close the diary (the one extra tap she agreed to). A browser only lets a page close itself
+>   in some cases — usually once installed as an app — so if it can't, the screen says so and
+>   asks her to swipe it away; everything is already saved. Not available mid-edit.
+> - **Month end:** a backup of the whole diary is saved just before a month is cleared, as a
+>   second safety net behind the documents; if it can't be made, the month is not cleared.
+> - **Restore** is a quiet text link at the foot of the page. It checks the file really is a
+>   diary backup, says when it was made and what it holds, and asks before replacing
+>   everything. If the diary holds anything, a backup of it is saved first, so a wrong choice
+>   can be undone. Restoring is all-or-nothing: if it fails part-way, nothing is changed.
+>
 > Stage 5 is installation: offline working, the grape-vine icon, and the launcher entry.
 
 ## Context

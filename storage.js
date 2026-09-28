@@ -83,6 +83,24 @@ const Store = (() => {
       return row ? row.value : undefined;
     },
     delMeta(key)      { return run('meta', 'readwrite', s => s.delete(key)); },
+    allMeta()         { return run('meta', 'readonly',  s => s.getAll()); },
+
+    /* Restoring a backup: empty the diary and fill it with the backup's contents, all in one
+       step — if anything goes wrong part-way, nothing at all is changed. */
+    async replaceAll({ entries, photos, meta }) {
+      const db = await open();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(['entries', 'photos', 'meta'], 'readwrite');
+        const [es, ps, ms] = ['entries', 'photos', 'meta'].map(n => tx.objectStore(n));
+        es.clear(); ps.clear(); ms.clear();
+        for (const e of entries) es.put(e);
+        for (const p of photos) ps.put(p);
+        for (const m of meta) ms.put(m);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+        tx.onabort = () => reject(tx.error);
+      });
+    },
 
     /* Remove any photograph no longer referenced by an entry or by the unsaved draft.
        Keeps the phone tidy after deletions. */

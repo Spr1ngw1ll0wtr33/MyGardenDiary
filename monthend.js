@@ -283,16 +283,7 @@ const MonthEnd = (() => {
 
   /* ---------------- downloading ---------------- */
 
-  function saveFile(blob, name) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 60_000);
-  }
+  const saveFile = (blob, name) => Backup.saveFile(blob, name);
 
   const pause = (ms) => new Promise(r => setTimeout(r, ms));
 
@@ -330,6 +321,7 @@ const MonthEnd = (() => {
     $('gateTableName').textContent = names.table;
     $('gateJournalName').textContent = names.journal;
     $('gateError').hidden = true;
+    $('gateBackupError').hidden = true;
     show('ready');
   }
 
@@ -356,7 +348,7 @@ const MonthEnd = (() => {
       const box = $('ask');
       $('askText').textContent =
         `Clear ${monthName(key)} from the diary?\n\nCheck both files are in your Downloads first — ` +
-        'once cleared, the documents are the record.';
+        'once cleared, the documents are the record.\n\nA backup of the whole diary is saved as it clears.';
       $('askYes').textContent = 'Yes, clear it';
       box.hidden = false;
       const done = (answer) => {
@@ -377,6 +369,17 @@ const MonthEnd = (() => {
     const key = current.key;
     if (!current.files) return;              // never clear a month whose documents were not made
     if (!(await askToClear(key))) return;
+
+    // a second safety net behind the documents: everything, as it stood just before clearing
+    $('gateBackupError').hidden = true;
+    try {
+      await Backup.save();
+      await pause(900);
+    } catch (err) {
+      console.error('The backup before clearing could not be made', err);
+      $('gateBackupError').hidden = false;
+      return;
+    }
 
     for (const e of await Store.allEntries()) {
       if (monthKey(e.date) === key) await Store.deleteEntry(e.id);

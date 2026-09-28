@@ -204,11 +204,15 @@
   function saveDraft() {
     if (editingId !== null) return;             // editing an entry, not writing a new one
     clearTimeout(draftTimer);
-    draftTimer = setTimeout(async () => {
-      await Store.setMeta('draft-factual', readFactual());
-      await Store.setMeta('draft-journal',
-        { date: $('j-date').value, text: $('j-text').value, photoIds: journalPhotoIds });
-    }, 400);
+    draftTimer = setTimeout(writeDraft, 400);
+  }
+
+  async function writeDraft() {
+    clearTimeout(draftTimer);
+    if (editingId !== null) return;
+    await Store.setMeta('draft-factual', readFactual());
+    await Store.setMeta('draft-journal',
+      { date: $('j-date').value, text: $('j-text').value, photoIds: journalPhotoIds });
   }
 
   async function loadDraft() {
@@ -477,6 +481,92 @@
     toast('Entry deleted');
   }
 
+  /* ---------------- backup and restore ---------------- */
+
+  function showBye(state) {
+    for (const el of document.querySelectorAll('#bye [data-bye]')) el.hidden = el.dataset.bye !== state;
+  }
+
+  function hideBye() {
+    $('bye').hidden = true;
+    document.body.classList.remove('gate-open');
+  }
+
+  /* Backup & Exit: a fresh backup file every time, then one more tap to close. */
+  async function backupAndExit() {
+    if (editingId !== null) {
+      toast('Finish this entry first — Update or Cancel');
+      return;
+    }
+    let name;
+    try {
+      await writeDraft();                      // half-written work goes into the backup too
+      name = await Backup.save();
+    } catch (err) {
+      console.error('The backup could not be made', err);
+      toast('The backup could not be made — nothing has been lost');
+      return;
+    }
+    $('byeName').textContent = name;
+    showBye('ready');
+    $('bye').hidden = false;
+    document.body.classList.add('gate-open');
+  }
+
+  function closeDiary() {
+    window.close();
+    // Browsers only let a page close itself in some cases (usually when installed as an app).
+    setTimeout(() => showBye('stuck'), 400);
+  }
+
+  const n = (count, one, many) => `${count} ${count === 1 ? one : many}`;
+
+  function describeSaved(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return 'an unknown date';
+    const day = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const h = d.getHours() % 12 || 12;
+    return `${day}, ${h}:${pad(d.getMinutes())}${d.getHours() < 12 ? 'am' : 'pm'}`;
+  }
+
+  async function restoreFrom(file) {
+    if (editingId !== null) {
+      toast('Finish this entry first — Update or Cancel');
+      return;
+    }
+    let data;
+    try {
+      data = await Backup.read(file);
+    } catch (_) {
+      toast('That file is not a My Garden Diary backup');
+      return;
+    }
+
+    await writeDraft();
+    const holding = (await Store.allEntries()).length;
+    const question =
+      `Restore the backup from ${describeSaved(data.saved)}?\n\n` +
+      `It holds ${n(data.entries.length, 'entry', 'entries')} and ` +
+      `${n(data.photos.length, 'photograph', 'photographs')}.\n\n` +
+      'Everything now in the diary will be replaced' +
+      (holding ? ' — a backup of it is saved to your Downloads first.' : '.');
+    if (!(await confirmAsk(question, 'Yes, restore'))) return;
+
+    try {
+      if (holding) {                            // never lose what was there, even by mistake
+        await Backup.save();
+        await new Promise(r => setTimeout(r, 900));
+      }
+      await Backup.restore(data);
+    } catch (err) {
+      console.error('The backup could not be restored', err);
+      toast('The backup could not be restored — nothing has been changed');
+      return;
+    }
+    sessionStorage.setItem('diary-restored', '1');
+    location.reload();                          // start afresh with the restored diary
+  }
+
   /* ---------------- start ---------------- */
 
   async function start() {
@@ -520,9 +610,23 @@
       ev.target.value = '';            // so the same photograph can be chosen again
     });
 
-    $('btnExit').addEventListener('click', () => {
-      toast('Backup & Exit comes at Stage 4');
+    $('btnExit').addEventListener('click', backupAndExit);
+    $('byeClose').addEventListener('click', closeDiary);
+    $('byeStay').addEventListener('click', hideBye);
+    $('byeStay2').addEventListener('click', hideBye);
+
+    $('btnRestore').addEventListener('click', () => $('restoreInput').click());
+    $('restoreInput').addEventListener('change', async (ev) => {
+      const file = ev.target.files[0];
+      ev.target.value = '';
+      if (file) await restoreFrom(file);
     });
+    try {
+      if (sessionStorage.getItem('diary-restored')) {
+        sessionStorage.removeItem('diary-restored');
+        toast('Backup restored');
+      }
+    } catch (_) { /* no matter */ }
 
     // if the app is left open across midnight into a new season, catch up quietly
     setInterval(() => {

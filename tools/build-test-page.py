@@ -45,7 +45,7 @@ html = html.replace('src="assets/motifs/autumn.svg"', f'src="{MOTIFS["autumn"]}"
 # before the scripts go in.)
 loads = re.findall(r'(?:src|href)="(?!data:)([^"]+)"|url\(\s*(?!data:)[\'"]?([^)\'"]+)', html)
 outside = sorted({(a or b) for a, b in loads if (a or b) not in
-                  ('vendor/docx.iife.js', 'storage.js', 'monthend.js', 'app.js')})
+                  ('vendor/docx.iife.js', 'storage.js', 'backup.js', 'monthend.js', 'app.js')})
 assert not outside, f'the bundle still loads from outside itself: {outside}'
 
 motif_map = ',\n  '.join(f'{name}: "{uri}"' for name, uri in MOTIFS.items())
@@ -66,11 +66,12 @@ scripts = '\n'.join([
     '<script>\nwindow.MOTIF_SRC = {\n  ' + motif_map + '\n};\nwindow.DOC_ASSETS = {\n  ' + doc_map + '\n};\n</script>',
     inline(read('vendor/docx.iife.js')),
     inline(read('storage.js')),
+    inline(read('backup.js')),
     inline(read('monthend.js')),
     inline(read('app.js')),
 ])
 tags = ('<script src="vendor/docx.iife.js"></script>\n<script src="storage.js"></script>\n'
-        '<script src="monthend.js"></script>\n<script src="app.js"></script>')
+        '<script src="backup.js"></script>\n<script src="monthend.js"></script>\n<script src="app.js"></script>')
 assert tags in html, 'index.html script tags have changed — update the bundler'
 html = html.replace(tags, scripts)
 

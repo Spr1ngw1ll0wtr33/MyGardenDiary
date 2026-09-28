@@ -141,6 +141,11 @@
       </div>
     </section>
 
+    <div class="restorerow">
+      <button type="button" class="quietlink" id="btnRestore">Restore from a backup</button>
+      <input type="file" id="restoreInput" hidden>
+    </div>
+
   </main>
 </div>
 
@@ -174,9 +179,37 @@
           <li id="gateJournalName"></li>
         </ul>
         <p>Check they are both there, then clear <span class="gateClearName">August</span> to start afresh.</p>
+        <p class="gate-error" id="gateBackupError" hidden>A backup could not be made, so nothing has
+           been cleared. Please try again.</p>
         <div class="btnrow split">
           <button type="button" class="btn aux big" id="gateAgain">Download again</button>
           <button type="button" class="btn crit big" id="gateClear">Clear <span class="gateClearName">August</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="gate" id="bye" hidden>
+  <div class="frame">
+    <div class="gate-body" role="dialog" aria-modal="true" aria-labelledby="byeTitle">
+      <h1 class="apptitle">My Garden Diary</h1>
+      <img class="divider" src="assets/motifs/divider.svg" alt="">
+      <p class="gate-kicker">Backup &amp; Exit</p>
+      <h2 class="gate-month" id="byeTitle">Backup saved</h2>
+      <p>Your backup has been sent to your Downloads folder:</p>
+      <ul class="gate-files"><li id="byeName"></li></ul>
+      <div data-bye="ready">
+        <div class="btnrow split">
+          <button type="button" class="btn aux big" id="byeStay">Carry on</button>
+          <button type="button" class="btn crit big" id="byeClose">Close the diary</button>
+        </div>
+      </div>
+      <div data-bye="stuck" hidden>
+        <p>Your phone won&rsquo;t let the diary close itself. Everything is saved &mdash; swipe it
+           away from your recent apps to close it.</p>
+        <div class="btnrow center">
+          <button type="button" class="btn aux big" id="byeStay2">Carry on</button>
         </div>
       </div>
     </div>
@@ -197,6 +230,7 @@
 
 <script src="vendor/docx.iife.js"></script>
 <script src="storage.js"></script>
+<script src="backup.js"></script>
 <script src="monthend.js"></script>
 <script src="app.js"></script>
 </body>
