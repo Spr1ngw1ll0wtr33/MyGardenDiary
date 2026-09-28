@@ -40,9 +40,15 @@
 > Both retested by Kathryn on GitHub Pages, 28/09/2026: working (a real August month with
 > 5, 7 and 3 photographs per entry sat in tidy rows in LibreOffice).
 >
-> **Stage 4 — backup and restore: COMPLETE, 28/09/2026.** `backup.js`. Tested by Kathryn:
-> backup download and restore both work, and her Downloads folder syncs the backup files to
-> her cloud storage automatically. Close the diary to be checked once installed (Stage 5).
+> **Stage 4 — backup and restore: COMPLETE, 28/09/2026.** `backup.js`. Tested by Kathryn in
+> Firefox on her PC: backup download and restore both work, and the PC's Downloads folder
+> syncs to her cloud storage. (Correction, same day: the PHONE is not synced to the cloud, by
+> her choice — her cloud holds financial records and the phone is not to have access. Phone
+> backups are moved to the PC by hand.)
+>
+> **Note:** all testing so far has been on the PC. Stage 5 includes a full check of every
+> function on the phone once installed — including Close the diary — and a simple, cloud-free
+> way to move backup files from phone to PC.
 > A backup is one JSON file holding every entry, every photograph and any half-written work,
 > saved to Downloads as `My-Garden-Diary-Backup-YYYY-MM-DD-HHMM.json`.
 > - **Backup & Exit** saves a fresh backup, shows its file name, then offers Carry on or
