@@ -9,7 +9,7 @@
 /* 30/09/2026: this note was added only to prompt phones to fetch a fresh offline copy, after
    another app on the same web address (Boundaries, since fixed) cleared it by mistake. */
 
-const VERSION = 'dde7bdbf48a2';
+const VERSION = '2cdb1e0326a3';
 const FILES = [
   './',
   'index.html',
