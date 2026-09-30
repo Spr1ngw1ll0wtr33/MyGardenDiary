@@ -6,6 +6,9 @@
    VERSION and FILES are filled in by tools/stamp-offline.py whenever the app changes, so the
    phone knows to fetch the new copy. */
 
+/* 30/09/2026: this note was added only to prompt phones to fetch a fresh offline copy, after
+   another app on the same web address (Boundaries, since fixed) cleared it by mistake. */
+
 const VERSION = 'dde7bdbf48a2';
 const FILES = [
   './',
